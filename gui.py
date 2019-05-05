@@ -1,8 +1,9 @@
 import crawler
 from tkinter import *
 from tkinter import messagebox
-import tkinter as tk
+import tkinter as tkinter1
 import json #import json module
+import threading
 
 root = Tk()
 root.title('Bundesliga Vorhersage')
@@ -10,19 +11,27 @@ root.title('Bundesliga Vorhersage')
 league_result = []
 team_list=["A List wasn't loaded"]
 def but1onClick():
-    result = json.loads(crawler.crawling())# Crawler loads Data
+    season.configure(text= "Loading, wait Please") #change the Season in the Text
+    t1 = threading.Thread(target=crawling) #make Thread
+    t1.daemon = True  # make as Daemon Thread
+    t1.start()  # start
+
+def crawling(): #
+    result = json.loads(crawler.crawling())
     team_list = result['TeamList'] # Save the TeamList in List
     league_result = result['LeagueResult'] # Save the LeagueResult in List
     season.configure(text= result['year']) #change the Season in the Text
     # reset var and delete all old options
-    tkvar1.set(team_list[0]) #
+    tkvar1.set(team_list[0])
     tkvar2.set(team_list[1])
     popupMenu1['menu'].delete(0, 'end')
     popupMenu2['menu'].delete(0, 'end')
     #reload all teams
     for team in team_list:
-        popupMenu1['menu'].add_command(label=team, command=tk._setit(tkvar1, team))
-        popupMenu2['menu'].add_command(label=team, command=tk._setit(tkvar2, team))
+        popupMenu1['menu'].add_command(label=team, command=tkinter1._setit(tkvar1, team))
+        popupMenu2['menu'].add_command(label=team, command=tkinter1._setit(tkvar2, team))
+    btn2.config(state="normal")
+    btn1.config(state="disabled")
         
 
 def traning():
@@ -37,7 +46,7 @@ select_Team.grid(row = 3, column = 1)
 #set buttons
 btn1 = Button(root, text="Crawling", command=but1onClick) # crawl
 btn1.grid(row=0, column=1)
-btn2 = Button(root, text="Training Start", command=traning)
+btn2 = Button(root, text="Training Start", command=traning, state=DISABLED)
 btn2.grid(row=2, column=1)
 vstext = Label(root, text="VS")
 vstext.grid(row=4, column=1)
