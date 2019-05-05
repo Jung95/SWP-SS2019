@@ -31,3 +31,13 @@ for gameday in range(34): # total 34 Game
 
 json_result = json.dumps(league_result, indent=4)
 print(json_result)
+
+team_list = []
+url = 'https://www.openligadb.de/api/getavailableteams/bl1/' + str(league_year) # set he URL
+teams = requests.get(url).json()
+
+for num in range(len(teams)):
+    team_list.append(teams[num]['TeamName'])
+    
+json_team_list = json.dumps(team_list, indent=4)
+print(json_team_list)
