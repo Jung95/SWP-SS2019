@@ -1,41 +1,33 @@
-from urllib.request import urlopen  # import urlopen module
+import requests  # import requests module
 import os #import os module
 import time #import time module
+import json #import json module
 
-print('Start year?')
-startyear = int(input()) # set the start year to download
-now = time.gmtime(time.time()) # get the current time
-nowyear = now.tm_year  # get the current year from  current time
+now = time.gmtime(time.time()) # set now
+year = now.tm_year # now year
+mon = now.tm_mon #now month
 
-try: # if there isnt the Origin Directory, then make that
-    if not(os.path.isdir('origin')): 
-        os.makedirs(os.path.join('origin'))
-except OSError as e:
-    raise
+if(mon<7): # if before start season, then  now month - 2 (for example now 4/2019, then liga18/19 -> url 2018, but not yet end the season, so url 2017 is loaded)
+    league_year = year - 2
+else:
+    league_year = year - 1
 
-for year in range(startyear, nowyear + 1): # from Startyear to nowyear
-    str_year =str(year) # convert year int to str
-    try:
-        if not(os.path.isdir('origin/'+ str_year)):  # if there isnt the years Directory, then make that
-            os.makedirs(os.path.join('origin/'+str_year))
-    except OSError as e:
-        raise
-    
-    for gameday in range(34): # total 34 Game
-        str_gameday = str(gameday+1)  # day year int to str and plus 
-        url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str_year +'/' + (str_gameday) # set he URL
-        target_file = 'origin/' + str_year + '/'+str_gameday+'.json'
+league_result = []
 
-        if (year < nowyear and os.path.exists(target_file)): # if we have data of last years already, then skip
-            pass
-        else:
-            with urlopen(url) as res:  # Open URL
-                res_data = res.read()
-            with open(target_file, 'wb') as f:
-                f.write(res_data)
+for gameday in range(34): # total 34 Game
+    url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(league_year) +'/' + str(gameday+1) # set he URL
+    data = requests.get(url).json()
+    day_result = []
+    for game in range(len(data)):
+        day = {}
+        day['Datum'] = data[game]['MatchDateTime']
+        day['Heimverein'] = data[game]['Team1']['TeamName']
+        day['Gastverein']= data[game]['Team2']['TeamName']
+        day['ToreHeim'] =  str(data[game]['MatchResults'][1]['PointsTeam1'])
+        day['ToreGast']=  str(data[game]['MatchResults'][1]['PointsTeam2'])
+        day_result.append(day)
+    league_result.append(day_result)
+    print('day'+ str(gameday+1) + ' was loaded')
 
-
-
-
-
-
+json_result = json.dumps(league_result, indent=4)
+print(json_result)
