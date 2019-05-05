@@ -24,7 +24,7 @@ for year in range(startyear, nowyear + 1): # from Startyear to nowyear
     for gameday in range(34): # total 34 Game
         str_gameday = str(gameday+1)  # day year int to str and plus 
         url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str_year +'/' + (str_gameday) # set he URL
-        target_file = 'origin/' + str_year + '/'+str_gameday+'.xml'
+        target_file = 'origin/' + str_year + '/'+str_gameday+'.json'
 
         if (year < nowyear and os.path.exists(target_file)): # if we have data of last years already, then skip
             pass
