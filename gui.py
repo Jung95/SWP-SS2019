@@ -2,13 +2,12 @@ import crawler
 from tkinter import *
 from tkinter import messagebox
 import tkinter as tkinter1
-import json #import json module
 import threading
+
 
 root = Tk()
 root.title('Bundesliga Vorhersage')
 
-league_result = []
 team_list=["A List wasn't loaded"]
 def but1onClick():
     season.configure(text= "Loading, wait Please") #change the Season in the Text
@@ -17,10 +16,9 @@ def but1onClick():
     t1.start()  # start
 
 def crawling(): #
-    result = json.loads(crawler.crawling())
-    team_list = result['TeamList'] # Save the TeamList in List
-    league_result = result['LeagueResult'] # Save the LeagueResult in List
-    season.configure(text= result['year']) #change the Season in the Text
+    crawler.crawling()
+    team_list = crawler.team_list # Save the TeamList in List
+    season.configure(text= crawler.liga[0]) #change the Season in the Text
     # reset var and delete all old options
     tkvar1.set(team_list[0])
     tkvar2.set(team_list[1])
