@@ -42,6 +42,10 @@ season = Label(root, text="Season : it wasn't loaded")
 season.grid(row=1, column=1)
 select_Team = Label(root, text="Choose two Teams")
 select_Team.grid(row = 3, column = 1)
+home_Team = Label(root, text="Home")
+home_Team.grid(row = 3, column = 0)
+away_Team = Label(root, text="Away")
+away_Team.grid(row = 3, column = 2)
  
 #set buttons
 btn1 = Button(root, text="Crawling", command=but1onClick) # crawl
