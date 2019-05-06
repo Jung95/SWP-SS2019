@@ -32,6 +32,6 @@ def crawling():
         url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(league_year) +'/' + str(gameday+1) # set he URL
         data = requests.get(url).json()
         for game in range(len(data)):
-            wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['TeamName'],
-             data[game]['Team2']['TeamName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
+            wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['ShortName'],
+             data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
         print('day'+ str(gameday+1) + ' was loaded')
