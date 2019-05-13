@@ -6,11 +6,11 @@ import threading
 
 
 root = Tk()
-root.title('Bundesliga Vorhersage')
+root.title('Bundesliga Prediction')
 
-team_list=["A List wasn't loaded"]
+team_list=["No list loaded"]
 def but1onClick():
-    season.configure(text= "Loading, wait Please") #change the Season in the Text
+    season.configure(text= "Loading, please wait") #change the Season in the Text
     t1 = threading.Thread(target=crawling) #make Thread
     t1.daemon = True  # make as Daemon Thread
     t1.start()  # start
@@ -36,27 +36,27 @@ def traning():
     return 0
 
 # Set Labels
-season = Label(root, text="Season : it wasn't loaded")
+season = Label(root, text="Season : not loaded")
 season.grid(row=1, column=1)
 select_Team = Label(root, text="Choose two Teams")
 select_Team.grid(row = 3, column = 1)
 home_Team = Label(root, text="Home")
 home_Team.grid(row = 3, column = 0)
-away_Team = Label(root, text="Away")
+away_Team = Label(root, text="Guest")
 away_Team.grid(row = 3, column = 2)
  
 #set buttons
-btn1 = Button(root, text="Crawling", command=but1onClick) # crawl
+btn1 = Button(root, text="Crawler", command=but1onClick) # crawl
 btn1.grid(row=0, column=1)
-btn2 = Button(root, text="Training Start", command=traning, state=DISABLED)
+btn2 = Button(root, text="Start training", command=traning, state=DISABLED)
 btn2.grid(row=2, column=1)
 vstext = Label(root, text="VS")
 vstext.grid(row=4, column=1)
 result_text = Label(root, text="Expected results")
 result_text.grid(row=5, column=1)
-result_team1 = Label(root, text="it wasn't trained")
+result_team1 = Label(root, text="not trained")
 result_team1.grid(row=5, column=0)
-result_team2 = Label(root, text="it wasn't trained")
+result_team2 = Label(root, text="not trained")
 result_team2.grid(row=5, column=2)
 
 # Create a Tkinter variable
@@ -64,8 +64,8 @@ tkvar1 = StringVar(root)
 tkvar2 = StringVar(root)
 
 # Dictionary with options
-tkvar1.set("A List wasn't loaded") # set the default option
-tkvar2.set("A List wasn't loaded") # set the default option
+tkvar1.set("No list loaded") # set the default option
+tkvar2.set("No list loaded") # set the default option
 
 popupMenu1 = OptionMenu(root, tkvar1, *team_list)
 popupMenu2 = OptionMenu(root, tkvar2, *team_list)
