@@ -43,6 +43,7 @@ def crawling(): #
         popupMenu2['menu'].add_command(label=team, command=tkinter1._setit(tkvar2, team))
     btn2.config(state="normal")
     btn1.config(state="disabled")
+    popupMenu3.config(state="disabled")
         
 
 def traning():
@@ -95,6 +96,7 @@ popupMenu2.grid(row = 4, column =2)
 
 popupMenu3 = OptionMenu(root, tkvar3, *year_list)
 popupMenu3.grid(row = 0, column =0)
+
 # on change dropdown value
 
 def change_dropdown1(*args):
