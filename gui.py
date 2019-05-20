@@ -3,7 +3,16 @@ from tkinter import *
 from tkinter import messagebox
 import tkinter as tkinter1
 import threading
+import time
 
+now = time.gmtime(time.time()) # set now
+year = now.tm_year # now year
+mon = now.tm_mon #now month
+
+if(mon<7): # if before start season, then  now month - 2 (for example now 4/2019, then liga18/19 -> url 2018, but not yet end the season, so url 2017 is loaded)
+    league_year = year - 2
+else:
+    league_year = year - 1
 
 root = Tk()
 root.title('Bundesliga Prediction')
@@ -16,9 +25,9 @@ def but1onClick():
     t1.start()  # start
 
 def crawling(): #
-    crawler.crawling()
-    team_list = crawler.team_list # Save the TeamList in List
-    season.configure(text= crawler.liga[0]) #change the Season in the Text
+    crawler.crawling(league_year)
+    team_list = crawler.get_team_list(league_year) # Save the TeamList in List
+    season.configure(text= 'Bundesliga '+ str(league_year) + '/' + str(league_year+1)) #change the Season in the Text
     # reset var and delete all old options
     tkvar1.set(team_list[0])
     tkvar2.set(team_list[1])
