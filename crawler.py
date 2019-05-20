@@ -28,4 +28,5 @@ def get_team_list(year):
             pass
         else:
             team_list.append(line[1])
+    team_list.sort()
     return team_list
