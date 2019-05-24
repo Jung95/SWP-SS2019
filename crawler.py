@@ -8,7 +8,7 @@ def crawling(year):
         return 
     f = open( str(year)+'.csv', 'w', encoding='utf-8', newline='')
     wr = csv.writer(f)
-    # crawling all matchday
+    # crawling all matchdays
     for gameday in range(34): # total 34 Game
         url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(gameday+1) # set he URL
         data = requests.get(url).json()
@@ -16,6 +16,19 @@ def crawling(year):
             wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['ShortName'],
              data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
         print(str(year)+'/day'+ str(gameday+1) + ' was loaded')
+        
+# crawl next days matches
+def nxtMatch(year):
+    # todo: if last match day return
+    f = open( str(year)+'.csv', 'w', encoding='utf-8', newline='')
+    wr = csv.writer(f)
+    nxtMatchUrl = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(34)# todo: adapt next game day (34 only dummy)
+    dataNxt = requests.get(nxtMatchUrl).json()
+    for game in range(len(dataNxt)):
+            wr.writerow([dataNxt[game]['MatchDateTime'],dataNxt[game]['Team1']['ShortName'],
+                dataNxt[game]['Team2']['ShortName']])
+    print(str(year)+'/day'+ str(34) + ' was loaded')   
+
 
 def get_team_list(year):
     if not(os.path.isfile(str(year)+'.csv')): # if there is not CSV File , crawl it
