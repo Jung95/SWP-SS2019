@@ -4,6 +4,8 @@ from tkinter import messagebox
 import tkinter as tkinter1
 import threading
 import time
+import csv
+import os
 
 now = time.gmtime(time.time()) # set now
 year = now.tm_year # now year
@@ -64,7 +66,70 @@ home_Team = Label(root, text="Home")
 home_Team.grid(row = 3, column = 0)
 away_Team = Label(root, text="Guest")
 away_Team.grid(row = 3, column = 2)
- 
+
+# crawl teams for next matches
+if not(os.path.isfile('nextGames' + '.csv')):
+             listHome = ['Season has ended', '-', '-', '-', '-', '-', '-', '-', '-'] # if no data initilise empty table
+             listGuest = listHome
+else:
+        listHome = []
+        listGuest = []
+f = open('nextGames' +'.csv', 'r', encoding='utf-8')
+rdr = csv.reader(f)
+for line in rdr:
+        listHome.append(line[1])
+        listGuest.append(line[2])
+print(str(listHome))
+
+# table for tomorrows machtes
+nxtMtchs = Label(root, text='Next Matches')
+nxtMtchs.grid(row=7, column = 1)
+
+# initilise single grids
+plyr1 = Label(root, relief=RIDGE, text=listHome[0])
+plyr1.grid(row=8, column=0)
+plyr2 = Label(root,relief=RIDGE, text=listGuest[0])
+plyr2.grid(row=8, column=2)
+plyr3 = Label(root, relief=RIDGE, text=listHome[1])
+plyr3.grid(row=9, column=0)
+plyr4 = Label(root, relief=RIDGE, text=listGuest[1])
+plyr4.grid(row=9, column=2)
+plyr5 = Label(root,relief=RIDGE, text=listHome[2])
+plyr5.grid(row=10, column=0)
+plyr6 = Label(root, relief=RIDGE,text=listGuest[2])
+plyr6.grid(row=10, column=2)
+plyr7 = Label(root,relief=RIDGE, text=listHome[3])
+plyr7.grid(row=11, column=0)
+plyr8 = Label(root, relief=RIDGE, text=listGuest[3])
+plyr8.grid(row=11, column=2)
+plyr9 = Label(root,relief=RIDGE, text=listHome[4])
+plyr9.grid(row=12, column=0)
+plyr10 = Label(root,relief=RIDGE, text=listGuest[4])
+plyr10.grid(row=12, column=2)
+plyr11 = Label(root,relief=RIDGE, text=listHome[5])
+plyr11.grid(row=13, column=0)
+plyr12 = Label(root,relief=RIDGE, text=listGuest[5])
+plyr12.grid(row=13, column=2)
+plyr13 = Label(root, relief=RIDGE,text=listHome[6])
+plyr13.grid(row=14, column=0)
+plyr14 = Label(root, relief=RIDGE,text=listGuest[6])
+plyr14.grid(row=14, column=2)
+plyr15 = Label(root,relief=RIDGE, text=listHome[7])
+plyr15.grid(row=15, column=0)
+plyr16 = Label(root,relief=RIDGE, text=listGuest[7])
+plyr16.grid(row=15, column=2)
+plyr17 = Label(root, relief=RIDGE,text=listHome[8])
+plyr17.grid(row=16, column=0)
+plyr18 = Label(root, relief=RIDGE,text=listGuest[8])
+plyr18.grid(row=16, column=2)
+
+# vs. between the two teams
+cnt = 8
+for v in range(1,10):
+    Label(root, text='vs.').grid(row=cnt,column=1)
+    cnt = cnt + 1
+
+
 #set buttons
 btn1 = Button(root, text="Crawler", command=but1onClick) # crawl
 btn1.grid(row=0, column=1)
@@ -78,6 +143,7 @@ result_team1 = Label(root, text="not trained")
 result_team1.grid(row=5, column=0)
 result_team2 = Label(root, text="not trained")
 result_team2.grid(row=5, column=2)
+
 
 # Create a Tkinter variable
 tkvar1 = StringVar(root)

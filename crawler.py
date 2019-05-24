@@ -20,7 +20,7 @@ def crawling(year):
 # crawl next days matches
 def nxtMatch(year):
     # todo: if last match day return
-    f = open( str(year)+'.csv', 'w', encoding='utf-8', newline='')
+    f = open( 'nextGames' +'.csv', 'w', encoding='utf-8', newline='')
     wr = csv.writer(f)
     nxtMatchUrl = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(34)# todo: adapt next game day (34 only dummy)
     dataNxt = requests.get(nxtMatchUrl).json()
