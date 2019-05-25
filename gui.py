@@ -68,18 +68,20 @@ away_Team = Label(root, text="Guest")
 away_Team.grid(row = 3, column = 2)
 
 # crawl teams for next matches
+crawler.nxtMatch(2018)
+
+# put teams into lists
 if not(os.path.isfile('nextGames' + '.csv')):
              listHome = ['Season has ended', '-', '-', '-', '-', '-', '-', '-', '-'] # if no data initilise empty table
              listGuest = listHome
 else:
         listHome = []
         listGuest = []
-f = open('nextGames' +'.csv', 'r', encoding='utf-8')
-rdr = csv.reader(f)
-for line in rdr:
-        listHome.append(line[1])
-        listGuest.append(line[2])
-print(str(listHome))
+        f = open('nextGames' +'.csv', 'r', encoding='utf-8')
+        rdr = csv.reader(f)
+        for line in rdr:
+            listHome.append(line[1])
+            listGuest.append(line[2])
 
 # table for tomorrows machtes
 nxtMtchs = Label(root, text='Next Matches')
