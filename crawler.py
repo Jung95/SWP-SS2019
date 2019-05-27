@@ -20,7 +20,10 @@ def setGameday():
     t = open('currentGameday' +'.csv', 'r', encoding='utf-8')
     rdr = csv.reader(t)
     for line in rdr:
+        """for Test
         gameday = int(line[0])
+        """
+        gameday = 33
     print('Gameday = '+str(gameday))
     
 def crawling(year):
