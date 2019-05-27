@@ -6,6 +6,7 @@ import threading
 import time
 import csv
 import os
+import miniAlgo
 
 now = time.gmtime(time.time()) # set now
 year = now.tm_year # now year
@@ -27,7 +28,17 @@ def but1onClick():
     t1 = threading.Thread(target=crawling) #make Thread
     t1.daemon = True  # make as Daemon Thread
     t1.start()  # start
-
+def dropdownChange(home, away):
+    if(home =="No list loaded" or away == "No list loaded"):
+        return
+    t2 = threading.Thread(target=calc(home,away)) #make Thread
+    t2.daemon = True  # make as Daemon Thread
+    t2.start()
+def calc(home, away):
+    result = miniAlgo.algo(home, away, league_year)
+    result_team1.configure(text= str(result[0])+"%")
+    result_text.configure(text= str(result[1])+"%")
+    result_team2.configure(text= str(result[2])+"%")
 def crawling(): #
     start_year = int(tkvar3.get()) #set the Start year for Crawling
     for crawling_year in range(start_year, league_year+1): 
@@ -46,7 +57,6 @@ def crawling(): #
     btn2.config(state="normal")
     btn1.config(state="disabled")
     popupMenu3.config(state="disabled")
-        
 
 def traning():
     return 0
@@ -168,9 +178,9 @@ popupMenu3.grid(row = 0, column =0)
 # on change dropdown value
 
 def change_dropdown1(*args):
-    print( tkvar1.get() )
+    dropdownChange(tkvar1.get(), tkvar2.get())
 def change_dropdown2(*args):
-    print( tkvar2.get() )
+    dropdownChange(tkvar1.get(), tkvar2.get())
 
 # link function to change dropdown
 tkvar1.trace('w', change_dropdown1)
