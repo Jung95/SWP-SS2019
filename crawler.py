@@ -3,6 +3,26 @@ import time #import time module
 import os
 import csv
 
+gameday = 1 # current gameday
+
+# determine gameday by downloading current days data
+def getGameday():
+    f = open( 'currentGameday' +'.csv', 'w', encoding='utf-8', newline='')
+    wr = csv.writer(f)
+    Url = 'https://www.openligadb.de/api/getmatchdata/bl1'
+    data = requests.get(Url).json()
+    wr.writerow([data[1]['Group']['GroupOrderID']])
+    print('current gameday was loaded') 
+
+# set current gameday 
+def setGameday():
+    global gameday
+    t = open('currentGameday' +'.csv', 'r', encoding='utf-8')
+    rdr = csv.reader(t)
+    for line in rdr:
+        gameday = int(line[0])
+    print('Gameday = '+str(gameday))
+    
 def crawling(year):
     if(os.path.isfile(str(year)+'.csv')): # if there is CSV File already, skip it
         return 
@@ -19,15 +39,15 @@ def crawling(year):
         
 # crawl next days matches
 def nxtMatch(year):
-    # todo: if last match day return
-    f = open( 'nextGames' +'.csv', 'w', encoding='utf-8', newline='')
-    wr = csv.writer(f)
-    nxtMatchUrl = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(34)# todo: adapt next game day (34 only dummy)
-    dataNxt = requests.get(nxtMatchUrl).json()
-    for game in range(len(dataNxt)):
-            wr.writerow([dataNxt[game]['MatchDateTime'],dataNxt[game]['Team1']['ShortName'],
-                dataNxt[game]['Team2']['ShortName']])
-    print(str(year)+'/day'+ str(34) + ' was loaded')   
+    if not(gameday == 34): # if season is over, don't crawl new Data
+        f = open( 'nextGames' +'.csv', 'w', encoding='utf-8', newline='')
+        wr = csv.writer(f)
+        nxtMatchUrl = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(gameday+1)
+        dataNxt = requests.get(nxtMatchUrl).json()
+        for game in range(len(dataNxt)):
+                wr.writerow([dataNxt[game]['MatchDateTime'],dataNxt[game]['Team1']['ShortName'],
+                    dataNxt[game]['Team2']['ShortName']])
+        print(str(year)+'/day'+ str(gameday+1) + ' was loaded')   
 
 
 def get_team_list(year):
