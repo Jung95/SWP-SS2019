@@ -25,20 +25,50 @@ def setGameday():
         """
         gameday = 33
     print('Gameday = '+str(gameday))
-    
-def crawling(year):
-    if(os.path.isfile(str(year)+'.csv')): # if there is CSV File already, skip it
+
+def crawling(startYear, startDay, endYear, endDay):
+    fileName = str(startDay)+"_"+str(startYear)+"_"+str(endDay)+"_"+str(endYear) + '.csv'
+    if(os.path.isfile(fileName)): # if there is CSV File already, skip it
         return 
-    f = open( str(year)+'.csv', 'w', encoding='utf-8', newline='')
+    f = open( fileName, 'w', encoding='utf-8', newline='')
     wr = csv.writer(f)
     # crawling all matchdays
-    for gameday in range(34): # total 34 Game
-        url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(gameday+1) # set he URL
-        data = requests.get(url).json()
-        for game in range(len(data)):
-            wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['ShortName'],
-             data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
-        print(str(year)+'/day'+ str(gameday+1) + ' was loaded')
+    for year in range(startYear, endYear+1):
+        # If same start year and end yaer.
+        if (year == startYear and endYear == startYear):
+            for day in range(startDay, endDay+1):
+                url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(day) # set he URL
+                data = requests.get(url).json()
+                for game in range(len(data)):
+                    wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['ShortName'],
+                    data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
+                print(str(year)+'/day'+ str(day) + ' was loaded')        
+        # If same year and start yaer.
+        elif (year == startYear):
+            for day in range(startDay, 35):
+                url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(day) # set he URL
+                data = requests.get(url).json()
+                for game in range(len(data)):
+                    wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['ShortName'],
+                    data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
+                print(str(year)+'/day'+ str(day) + ' was loaded')
+        # If same year and end yaer.
+        elif (year == endYear):
+            for day in range(1, endDay+1):
+                url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(day) # set he URL
+                data = requests.get(url).json()
+                for game in range(len(data)):
+                    wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['ShortName'],
+                    data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
+                print(str(year)+'/day'+ str(day) + ' was loaded')
+        else:
+            for day in range(1, 35):
+                url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(day) # set he URL
+                data = requests.get(url).json()
+                for game in range(len(data)):
+                    wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['ShortName'],
+                    data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
+                print(str(year)+'/day'+ str(day) + ' was loaded')    
         
 # crawl next days matches
 def nxtMatch(year):
@@ -54,15 +84,11 @@ def nxtMatch(year):
 
 
 def get_team_list(year):
-    if not(os.path.isfile(str(year)+'.csv')): # if there is not CSV File , crawl it
-        crawling(year)
     team_list = []
-    f = open(str(year) +'.csv', 'r', encoding='utf-8')
-    rdr = csv.reader(f)
-    for line in rdr:
-        if line[1] in team_list:
-            pass
-        else:
-            team_list.append(line[1])
+    url = 'https://www.openligadb.de/api/getavailableteams/bl1/' + str(year) # set he URL
+    teams = requests.get(url).json()
+    for num in range(len(teams)):
+        team_list.append(teams[num]['ShortName'])
     team_list.sort()
     return team_list
+
