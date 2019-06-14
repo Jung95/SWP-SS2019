@@ -2,7 +2,7 @@ import requests  # import requests module
 import time #import time module
 import os
 import csv
-
+import actualMatchday
 gameday = 1 # current gameday
 
 # determine gameday by downloading current days data
@@ -15,6 +15,7 @@ def getGameday():
     print('current gameday was loaded') 
 
 # set current gameday 
+# use alternative actualMatchday() 
 def setGameday():
     global gameday
     t = open('currentGameday' +'.csv', 'r', encoding='utf-8')
