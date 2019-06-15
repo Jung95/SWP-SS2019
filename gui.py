@@ -12,7 +12,7 @@ import miniAlgo
 now = time.gmtime(time.time()) # set now
 year = now.tm_year # now year
 mon = now.tm_mon #now month
-
+wasEnded = False
 if(mon<7): # if before start season, then  now month - 2 (for example now 4/2019, then liga18/19 -> url 2018, but not yet end the season, so url 2017 is loaded)
     league_year = year - 1
 else:
@@ -80,21 +80,16 @@ def traning():
     global isTrained
     isTrained = True
     calc(tkvar1.get(), tkvar2.get())
-    
-    crawler.getGameday()
-    crawler.setGameday()
     # crawl teams for next matches
     crawler.nxtMatch(league_year)
     
     # put teams into lists
-    """ for Test
+
     if not(os.path.isfile('nextGames' + '.csv')) or (crawler.gameday == 34):
                 listHome = ['Season has ended', '-', '-', '-', '-', '-', '-', '-', '-'] # if no data initilise empty table
                 listGuest = listHome
+                wasEnded = True
     else:
-    """
-    
-    if True:
             listHome = []
             listGuest = []
             f = open('nextGames' +'.csv', 'r', encoding='utf-8')
@@ -104,17 +99,18 @@ def traning():
                 listGuest.append(line[2])
 
     # table for tomorrows machtes
-    nxtMtchs = Label(root, text='Next Matches')
-    nxtMtchs.grid(row=7, column = 1)
-    matchList = [0]*45
-    for match in range(9):
-        result = minialgo.predict(listHome[match], listGuest[match])
-        Label(root, relief=RIDGE, text=listHome[match]).grid(row=8+match*2, column=0)
-        Label(root,relief=RIDGE, text=listGuest[match]).grid(row=8+match*2, column=2)
-        Label(root, text=str(result[0])+"%").grid(row=9+match*2, column=0)
-        Label(root, text=str(result[1])+"%").grid(row=9+match*2, column=1)
-        Label(root, text=str(result[2])+"%").grid(row=9+match*2, column=2)
-        Label(root, text='vs.').grid(row=8 + 2*match,column=1)
+    if not wasEnded:
+        nxtMtchs = Label(root, text='Next Matches')
+        nxtMtchs.grid(row=7, column = 1)
+        matchList = [0]*45
+        for match in range(9):
+            result = minialgo.predict(listHome[match], listGuest[match])
+            Label(root, relief=RIDGE, text=listHome[match]).grid(row=8+match*2, column=0)
+            Label(root,relief=RIDGE, text=listGuest[match]).grid(row=8+match*2, column=2)
+            Label(root, text=str(result[0])+"%").grid(row=9+match*2, column=0)
+            Label(root, text=str(result[1])+"%").grid(row=9+match*2, column=1)
+            Label(root, text=str(result[2])+"%").grid(row=9+match*2, column=2)
+            Label(root, text='vs.').grid(row=8 + 2*match,column=1)
 
 
     

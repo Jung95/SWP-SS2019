@@ -2,30 +2,40 @@ import requests  # import requests module
 import time #import time module
 import os
 import csv
-import actualMatchday
-gameday = 1 # current gameday
+import urllib.request
+import json
 
 # determine gameday by downloading current days data
-def getGameday():
-    f = open( 'currentGameday' +'.csv', 'w', encoding='utf-8', newline='')
-    wr = csv.writer(f)
-    Url = 'https://www.openligadb.de/api/getmatchdata/bl1'
-    data = requests.get(Url).json()
-    wr.writerow([data[1]['Group']['GroupOrderID']])
-    print('current gameday was loaded') 
+
 
 # set current gameday 
-# use alternative actualMatchday() 
-def setGameday():
-    global gameday
-    t = open('currentGameday' +'.csv', 'r', encoding='utf-8')
-    rdr = csv.reader(t)
-    for line in rdr:
-        """for Test
-        gameday = int(line[0])
-        """
-        gameday = 33
-    print('Gameday = '+str(gameday))
+def actualMatchday():
+    ''' 
+    Method needs an Internet access
+    Data based on 'https://www.openligadb.de/api/getmatchdata/bl1'
+        
+    Returns: 
+        - actualMatchday() returns an int which correspodend with the actual matchday of the Bundesliga
+        - or an Error Message when the Matchdays of the matches differs
+    '''
+    
+    url = 'https://www.openligadb.de/api/getmatchdata/bl1'
+    opener = urllib.request.urlopen(url)
+    data = json.load(opener)
+
+    match1 = data[0]['Group']
+    groupID = match1['GroupOrderID']
+    
+    for x in range(1, 9):
+        match1 = data[x]['Group']
+        if match1['GroupOrderID'] != groupID:
+            print('unexpected Matchday diffrence')
+            return False
+        else: 
+            continue
+    return groupID
+
+
 
 def crawling(startYear, startDay, endYear, endDay):
     fileName = str(startDay)+"_"+str(startYear)+"_"+str(endDay)+"_"+str(endYear) + '.csv'
@@ -73,6 +83,7 @@ def crawling(startYear, startDay, endYear, endDay):
         
 # crawl next days matches
 def nxtMatch(year):
+    gameday= actualMatchday()
     if not(gameday == 34): # if season is over, don't crawl new Data
         f = open( 'nextGames' +'.csv', 'w', encoding='utf-8', newline='')
         wr = csv.writer(f)
@@ -92,4 +103,3 @@ def get_team_list(year):
         team_list.append(teams[num]['ShortName'])
     team_list.sort()
     return team_list
-
