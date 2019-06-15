@@ -10,7 +10,7 @@ class Algorithmus:
             startDay (int): Start Matchday to predict. It is optional, Default value is 0.
             endYear (int): End Year to predict. It is optional, Default value is 0.
             endDay (int): End Matchday to predict. It is optional, Default value is 0.
-            endDay (int): now Leagyear to get teamlist. It is optional, Default value is 0. 
+            nowYear (int): now Leagyear to get teamlist. It is optional, Default value is 0. 
         """        
         self.startYear = startYear
         self.startDay = startDay
@@ -30,7 +30,7 @@ class Algorithmus:
             startDay (int): Start Matchday to predict. 
             endYear (int): End Year to predict. 
             endDay (int): End Matchday to predict. 
-            endDay (int): now Leagyear to get teamlist. 
+            nowYear (int): now Leagyear to get teamlist. 
 
         Returns:
             True if successful, False otherwise.

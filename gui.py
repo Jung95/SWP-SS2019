@@ -7,6 +7,7 @@ import time
 import csv
 import os
 import miniAlgo
+import tester
 
 # Global variables
 now = time.gmtime(time.time()) # set now
@@ -55,6 +56,8 @@ def calc(home, away):
     result_team2.configure(text= str(result[2])+"%")
 def crawling(): #
     crawler.crawling(int(tkvar3.get()),int(tkvar5.get()),int(tkvar4.get()),int(tkvar6.get()))
+    tester.crawlTest(int(tkvar3.get()),int(tkvar5.get()),int(tkvar4.get()),int(tkvar6.get()))
+    
     team_list = crawler.get_team_list(league_year) # Save the TeamList in List
     season.configure(text= 'Bundesliga '+ str(league_year) + '/' + str(league_year+1)) #change the Season in the Text
     # reset var and delete all old options
