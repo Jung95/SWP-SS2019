@@ -9,18 +9,22 @@ def actualMatchday():
     Data based on 'https://www.openligadb.de/api/getmatchdata/bl1'
         
     Returns: 
-        actualMatchday() returns an int which correspodend with the actual matchday of the Bundesliga
+        - actualMatchday() returns an int which correspodend with the actual matchday of the Bundesliga
+        - or an Error Message when the Matchdays of the matches differs
     '''
     
     url = 'https://www.openligadb.de/api/getmatchdata/bl1'
     opener = urllib.request.urlopen(url)
     data = json.load(opener)
 
-# todo Match 1-9 vergleichen
-    match1 = data[0]
-    group1 = match1['Group']
-#    mtchdte = group['MatchDateTime']  
+    match1 = data[0]['Group']
+    groupID = match1['GroupOrderID']
     
-    mtchdy = group1['GroupOrderID']
-      
-    print(mtchdy)
+    for x in range(1, 9):
+        match1 = data[x]['Group']
+        if match1['GroupOrderID'] != groupID:
+            break
+            print ('unexpected Matchday diffrence')
+        else: 
+            continue
+    print(groupID)
