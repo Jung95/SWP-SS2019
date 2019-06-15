@@ -85,7 +85,7 @@ def traning():
     
     # put teams into lists
 
-    if not(os.path.isfile('nextGames' + '.csv')) or (crawler.gameday == 34):
+    if not(os.path.isfile('nextGames' + '.csv')):
                 listHome = ['Season has ended', '-', '-', '-', '-', '-', '-', '-', '-'] # if no data initilise empty table
                 listGuest = listHome
                 wasEnded = True
@@ -111,8 +111,8 @@ def traning():
             Label(root, text=str(result[1])+"%").grid(row=9+match*2, column=1)
             Label(root, text=str(result[2])+"%").grid(row=9+match*2, column=2)
             Label(root, text='vs.').grid(row=8 + 2*match,column=1)
-
-
+    else: 
+        Label(root, text='season has ended').grid(row= 9, column=1)
     
 # Set Labels
 season = Label(root, text="Season : not loaded")
