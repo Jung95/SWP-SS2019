@@ -43,18 +43,48 @@ def but1onClick():
 def dropdownChange(home, away):
     if not isTrained:
         return
-    t2 = threading.Thread(target=calc(home,away)) #make Thread
+    t2 = threading.Thread(target=startChoosnAlgo()) #make Thread
     t2.daemon = True  # make as Daemon Thread
     t2.start()
 
+def startChoosnAlgo():
+    """ calls function of the choosen algorithm 
+
+    args:
+        home (sting): home team
+        away (string): guest team
+    
+    """
+    if(algo.get() == "Mini Algorithm"): # add more algorithm function calls here
+        calcPrep()
+
+def calcPrep():
+    """Creates histogram for training mini algorithm
+    """
+    minialgo.setDate(int(tkvar3.get()), int(tkvar5.get()), int(tkvar4.get()), int(tkvar6.get()), league_year)
+    minialgo.setHisto()
+    calc(tkvar1.get(), tkvar2.get())
+
 def calc(home, away):
+    """Calcualte winning chances with minialgo
+
+    args:
+        home (string): home team
+        away (string): guest team
+    """
     if(home == "No list loaded" or away == "No list loaded"):
         return
+    print(home)
+    print(away)
     result = minialgo.predict(home, away)
     result_team1.configure(text= str(result[0])+"%")
     result_text.configure(text= str(result[1])+"%")
     result_team2.configure(text= str(result[2])+"%")
-def crawling(): #
+    
+def crawling():
+    """Crawl selected game results and save team names in dropdown menues
+
+    """
     crawler.crawling(int(tkvar3.get()),int(tkvar5.get()),int(tkvar4.get()),int(tkvar6.get()))
     tester.crawlTest(int(tkvar3.get()),int(tkvar5.get()),int(tkvar4.get()),int(tkvar6.get()))
     
@@ -77,12 +107,13 @@ def crawling(): #
     popupMenu6.config(state="disabled")
        
 def traning():
-    minialgo.setDate(int(tkvar3.get()), int(tkvar5.get()), int(tkvar4.get()), int(tkvar6.get()), league_year)
-    minialgo.setHisto()
     btn2.config(state="disabled")
     global isTrained
     isTrained = True
-    calc(tkvar1.get(), tkvar2.get())
+    
+    # aktivate choosen algorithm
+    startChoosnAlgo()
+    
     # crawl teams for next matches
     crawler.nxtMatch(league_year)
     
@@ -101,7 +132,7 @@ def traning():
                 listHome.append(line[1])
                 listGuest.append(line[2])
 
-    # table for tomorrows machtes
+    # table for tomorrows machtes with winning chances
     if not wasEnded:
         nxtMtchs = Label(root, text='Next Matches')
         nxtMtchs.grid(row=7, column = 1)
@@ -135,7 +166,7 @@ away_Team.grid(row = 3, column = 2)
 #set buttons
 btn1 = Button(root, text="Crawler", command=but1onClick) # crawl
 btn1.grid(row=0, column=1)
-btn2 = Button(root, text="Start training", command=traning, state=DISABLED)
+btn2 = Button(root, text="Start Training", command=traning, state=DISABLED)
 btn2.grid(row=2, column=1)
 vstext = Label(root, text="VS")
 vstext.grid(row=4, column=1)
@@ -146,7 +177,6 @@ result_team1.grid(row=5, column=0)
 result_team2 = Label(root, text="not trained")
 result_team2.grid(row=5, column=2)
 
-
 # Create a Tkinter variable
 tkvar1 = StringVar(root) #home team
 tkvar2 = StringVar(root) #away team
@@ -154,7 +184,6 @@ tkvar3 = StringVar(root) #start year
 tkvar4 = StringVar(root) #end  year
 tkvar5 = StringVar(root) #start match day
 tkvar6 = StringVar(root) #end match day
-
 
 # Dictionary with options
 tkvar1.set("No list loaded") # set the default option
@@ -180,7 +209,6 @@ popupMenu6 = OptionMenu(root, tkvar6, *day_list)
 popupMenu6.grid(row = 1, column =2)
 
 # on change dropdown value
-
 def change_dropdown1(*args):
     dropdownChange(tkvar1.get(), tkvar2.get())
 def change_dropdown2(*args):
@@ -189,6 +217,16 @@ def change_dropdown2(*args):
 # link function to change dropdown
 tkvar1.trace('w', change_dropdown1)
 tkvar2.trace('w', change_dropdown2)
+
+# menu for selecting an algorithm 
+OPTIONS = [
+    "Mini Algorithm", # add new algorithm names here
+    ]
+algo = StringVar(root) 
+algo.set(OPTIONS[0]) # set the default option
+popupMenu7 = OptionMenu(root, algo, *OPTIONS)
+popupMenu7.grid(row = 3, column = 1)
+
 
 
 root.mainloop()
