@@ -4,6 +4,7 @@ import os
 import csv
 import urllib.request
 import json
+from datetime import datetime
 
 # determine gameday by downloading current days data
 
@@ -25,6 +26,8 @@ def actualMatchday():
 
     match1 = data[0]['Group']
     groupID = match1['GroupOrderID']
+    match9date = data[8]['MatchDateTime']
+    now = datetime.today().isoformat()
     
     for x in range(1, 9):
         match1 = data[x]['Group']
@@ -33,7 +36,10 @@ def actualMatchday():
             return False
         else: 
             continue
-    return groupID
+    if match9date < now:
+        return groupID + 1
+    else:
+        return groupID
 
 
 
@@ -84,7 +90,7 @@ def crawling(startYear, startDay, endYear, endDay):
 # crawl next days matches
 def nxtMatch(year):
     gameday= actualMatchday()
-    if not(gameday == 34): # if season is over, don't crawl new Data
+    if not(gameday == 35): # if season is over, don't crawl new Data
         f = open( 'nextGames' +'.csv', 'w', encoding='utf-8', newline='')
         wr = csv.writer(f)
         nxtMatchUrl = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(gameday+1)
