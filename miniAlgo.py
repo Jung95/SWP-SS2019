@@ -100,9 +100,10 @@ class Algorithmus:
                 if(home_goal<away_goal):
                     result[2] += self.histo[0][home][home_goal]*self.histo[1][away][away_goal]
         total = result[0]+result[1]+result[2]
-        result[0]= round(result[0]/total*100,2)
-        result[1]= round(result[1]/total*100,2)
-        result[2]= round(result[2]/total*100,2)          
+        if not(total == 0):
+            result[0]= round(result[0]/total*100,2)
+            result[1]= round(result[1]/total*100,2)
+            result[2]= round(result[2]/total*100,2)          
         return result
 
 
