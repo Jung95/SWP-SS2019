@@ -8,7 +8,6 @@ from datetime import datetime
 
 # determine gameday by downloading current days data
 
-
 # set current gameday 
 def actualMatchday():
     ''' 
@@ -26,7 +25,7 @@ def actualMatchday():
 
     match1 = data[0]['Group']
     groupID = match1['GroupOrderID']
-    match9date = data[8]['MatchDateTime']
+    lastmatch = data[0]['MatchDateTime']
     now = datetime.today().isoformat()
     
     for x in range(1, 9):
@@ -35,8 +34,11 @@ def actualMatchday():
             print('unexpected Matchday diffrence')
             return False
         else: 
-            continue
-    if match9date < now:
+            if lastmatch < data[x]['MatchDateTime']:
+                lastmatch = data[x]['MatchDateTime']
+            else:
+                continue        
+    if lastmatch < now:
         return groupID + 1
     else:
         return groupID
