@@ -61,9 +61,9 @@ def startChoosnAlgo():
 def calcPrep():
     """Creates histogram for training mini algorithm
     """
-    minialgo.setDate(int(tkvar3.get()), int(tkvar5.get()), int(tkvar4.get()), int(tkvar6.get()), league_year)
+    minialgo.setDate(int(startYear.get()), int(startMatch.get()), int(endYear.get()), int(endMatch.get()), league_year)
     minialgo.setHisto()
-    calc(tkvar1.get(), tkvar2.get())
+    calc(hometeamVar.get(), guestteamVar.get())
 
 def calc(home, away):
     """Calcualte winning chances with minialgo
@@ -85,20 +85,20 @@ def crawling():
     """Crawl selected game results and save team names in dropdown menues
 
     """
-    crawler.crawling(int(tkvar3.get()),int(tkvar5.get()),int(tkvar4.get()),int(tkvar6.get()))
-    tester.crawlTest(int(tkvar3.get()),int(tkvar5.get()),int(tkvar4.get()),int(tkvar6.get()))
+    crawler.crawling(int(startYear.get()),int(startMatch.get()),int(endYear.get()),int(endMatch.get()))
+    tester.crawlTest(int(startYear.get()),int(startMatch.get()),int(endYear.get()),int(endMatch.get()))
     
     team_list = crawler.get_team_list(league_year) # Save the TeamList in List
     season.configure(text= 'Bundesliga '+ str(league_year) + '/' + str(league_year+1)) #change the Season in the Text
     # reset var and delete all old options
-    tkvar1.set(team_list[0])
-    tkvar2.set(team_list[1])
+    hometeamVar.set(team_list[0])
+    guestteamVar.set(team_list[1])
     popupMenu1['menu'].delete(0, 'end')
     popupMenu2['menu'].delete(0, 'end')
     #reload all teams
     for team in team_list:
-        popupMenu1['menu'].add_command(label=team, command=tkinter1._setit(tkvar1, team))
-        popupMenu2['menu'].add_command(label=team, command=tkinter1._setit(tkvar2, team))
+        popupMenu1['menu'].add_command(label=team, command=tkinter1._setit(hometeamVar, team))
+        popupMenu2['menu'].add_command(label=team, command=tkinter1._setit(guestteamVar, team))
     btn2.config(state="normal")
     btn1.config(state="disabled")
     popupMenu3.config(state="disabled")
@@ -109,6 +109,7 @@ def crawling():
 def traning():
     btn2.config(state="disabled")
     global isTrained
+    global wasEnded
     isTrained = True
     
     # aktivate choosen algorithm
@@ -178,45 +179,45 @@ result_team2 = Label(root, text="not trained")
 result_team2.grid(row=5, column=2)
 
 # Create a Tkinter variable
-tkvar1 = StringVar(root) #home team
-tkvar2 = StringVar(root) #away team
-tkvar3 = StringVar(root) #start year 
-tkvar4 = StringVar(root) #end  year
-tkvar5 = StringVar(root) #start match day
-tkvar6 = StringVar(root) #end match day
+hometeamVar = StringVar(root) #home team
+guestteamVar = StringVar(root) #away team
+startYear = StringVar(root) #start year 
+endYear = StringVar(root) #end  year
+startMatch = StringVar(root) #start match day
+endMatch = StringVar(root) #end match day
 
 # Dictionary with options
-tkvar1.set("No list loaded") # set the default option
-tkvar2.set("No list loaded") # set the default option
-tkvar3.set(str(league_year)) # set the default option
-tkvar4.set(str(league_year)) # set the default option
-tkvar5.set(str(1)) # set the default option
-tkvar6.set(str(34)) # set the default option
+hometeamVar.set("No list loaded") # set the default option
+guestteamVar.set("No list loaded") # set the default option
+startYear.set(str(league_year)) # set the default option
+endYear.set(str(league_year)) # set the default option
+startMatch.set(str(1)) # set the default option
+endMatch.set(str(34)) # set the default option
 
-popupMenu1 = OptionMenu(root, tkvar1, *team_list)
-popupMenu2 = OptionMenu(root, tkvar2, *team_list)
+popupMenu1 = OptionMenu(root, hometeamVar, *team_list)
+popupMenu2 = OptionMenu(root, guestteamVar, *team_list)
 popupMenu1.grid(row = 4, column =0)
 popupMenu2.grid(row = 4, column =2)
 
-popupMenu3 = OptionMenu(root, tkvar3, *year_list)
+popupMenu3 = OptionMenu(root, startYear, *year_list)
 popupMenu3.grid(row = 0, column =0)
-popupMenu4 = OptionMenu(root, tkvar4, *year_list)
+popupMenu4 = OptionMenu(root, endYear, *year_list)
 popupMenu4.grid(row = 0, column =2)
 
-popupMenu5 = OptionMenu(root, tkvar5, *day_list)
+popupMenu5 = OptionMenu(root, startMatch, *day_list)
 popupMenu5.grid(row = 1, column =0)
-popupMenu6 = OptionMenu(root, tkvar6, *day_list)
+popupMenu6 = OptionMenu(root, endMatch, *day_list)
 popupMenu6.grid(row = 1, column =2)
 
 # on change dropdown value
 def change_dropdown1(*args):
-    dropdownChange(tkvar1.get(), tkvar2.get())
+    dropdownChange(hometeamVar.get(), guestteamVar.get())
 def change_dropdown2(*args):
-    dropdownChange(tkvar1.get(), tkvar2.get())
+    dropdownChange(hometeamVar.get(), guestteamVar.get())
 
 # link function to change dropdown
-tkvar1.trace('w', change_dropdown1)
-tkvar2.trace('w', change_dropdown2)
+hometeamVar.trace('w', change_dropdown1)
+guestteamVar.trace('w', change_dropdown2)
 
 # menu for selecting an algorithm 
 OPTIONS = [
