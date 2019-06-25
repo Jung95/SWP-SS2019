@@ -92,21 +92,21 @@ def crawling():
     # reset var and delete all old options
     hometeamVar.set(team_list[0])
     guestteamVar.set(team_list[1])
-    popupMenu1['menu'].delete(0, 'end')
-    popupMenu2['menu'].delete(0, 'end')
+    homeTeamMenu['menu'].delete(0, 'end')
+    geustTeamMenu['menu'].delete(0, 'end')
     #reload all teams
     for team in team_list:
-        popupMenu1['menu'].add_command(label=team, command=tkinter1._setit(hometeamVar, team))
-        popupMenu2['menu'].add_command(label=team, command=tkinter1._setit(guestteamVar, team))
-    btn2.config(state="normal")
-    btn1.config(state="disabled")
-    popupMenu3.config(state="disabled")
-    popupMenu4.config(state="disabled")
-    popupMenu5.config(state="disabled")
-    popupMenu6.config(state="disabled")
+        homeTeamMenu['menu'].add_command(label=team, command=tkinter1._setit(hometeamVar, team))
+        geustTeamMenu['menu'].add_command(label=team, command=tkinter1._setit(guestteamVar, team))
+    startTrainBtn.config(state="normal")
+    crwalBtn.config(state="disabled")
+    startYearMenu.config(state="disabled")
+    endYearMenu.config(state="disabled")
+    startMatchMenu.config(state="disabled")
+    endMatchMenu.config(state="disabled")
        
 def traning():
-    btn2.config(state="disabled")
+    startTrainBtn.config(state="disabled")
     global isTrained
     wasEnded = False
     isTrained = True
@@ -164,10 +164,10 @@ away_Team.grid(row = 3, column = 2)
 
 
 #set buttons
-btn1 = Button(root, text="Crawler", command=but1onClick) # crawl
-btn1.grid(row=0, column=1)
-btn2 = Button(root, text="Start Training", command=traning, state=DISABLED)
-btn2.grid(row=2, column=1)
+crwalBtn = Button(root, text="Crawler", command=but1onClick) # crawl
+crwalBtn.grid(row=0, column=1)
+startTrainBtn = Button(root, text="Start Training", command=traning, state=DISABLED)
+startTrainBtn.grid(row=2, column=1)
 vstext = Label(root, text="VS")
 vstext.grid(row=4, column=1)
 result_text = Label(root, text="Expected results")
@@ -193,20 +193,20 @@ endYear.set(str(league_year)) # set the default option
 startMatch.set(str(1)) # set the default option
 endMatch.set(str(34)) # set the default option
 
-popupMenu1 = OptionMenu(root, hometeamVar, *team_list)
-popupMenu2 = OptionMenu(root, guestteamVar, *team_list)
-popupMenu1.grid(row = 4, column =0)
-popupMenu2.grid(row = 4, column =2)
+homeTeamMenu = OptionMenu(root, hometeamVar, *team_list)
+geustTeamMenu = OptionMenu(root, guestteamVar, *team_list)
+homeTeamMenu.grid(row = 4, column =0)
+geustTeamMenu.grid(row = 4, column =2)
 
-popupMenu3 = OptionMenu(root, startYear, *year_list)
-popupMenu3.grid(row = 0, column =0)
-popupMenu4 = OptionMenu(root, endYear, *year_list)
-popupMenu4.grid(row = 0, column =2)
+startYearMenu = OptionMenu(root, startYear, *year_list)
+startYearMenu.grid(row = 0, column =0)
+endYearMenu = OptionMenu(root, endYear, *year_list)
+endYearMenu.grid(row = 0, column =2)
 
-popupMenu5 = OptionMenu(root, startMatch, *day_list)
-popupMenu5.grid(row = 1, column =0)
-popupMenu6 = OptionMenu(root, endMatch, *day_list)
-popupMenu6.grid(row = 1, column =2)
+startMatchMenu = OptionMenu(root, startMatch, *day_list)
+startMatchMenu.grid(row = 1, column =0)
+endMatchMenu = OptionMenu(root, endMatch, *day_list)
+endMatchMenu.grid(row = 1, column =2)
 
 # on change dropdown value
 def change_dropdown1(*args):
@@ -224,8 +224,8 @@ OPTIONS = [
     ]
 algo = StringVar(root) 
 algo.set(OPTIONS[0]) # set the default option
-popupMenu7 = OptionMenu(root, algo, *OPTIONS)
-popupMenu7.grid(row = 3, column = 1)
+algoSelMenu = OptionMenu(root, algo, *OPTIONS)
+algoSelMenu.grid(row = 3, column = 1)
 
 
 
