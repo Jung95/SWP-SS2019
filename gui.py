@@ -13,7 +13,6 @@ import tester
 now = time.gmtime(time.time()) # set now
 year = now.tm_year # now year
 mon = now.tm_mon #now month
-wasEnded = False
 if(mon<7): # if before start season, then  now month - 2 (for example now 4/2019, then liga18/19 -> url 2018, but not yet end the season, so url 2017 is loaded)
     league_year = year - 1
 else:
@@ -109,7 +108,7 @@ def crawling():
 def traning():
     btn2.config(state="disabled")
     global isTrained
-    global wasEnded
+    wasEnded = False
     isTrained = True
     
     # aktivate choosen algorithm
