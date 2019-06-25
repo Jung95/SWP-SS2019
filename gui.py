@@ -33,13 +33,13 @@ team_list=["No list loaded"]
 root = Tk()
 root.title('Bundesliga Prediction')
 
-def but1onClick():
+def makeCrawlThread():
     season.configure(text= "Loading, please wait") #change the Season in the Text
     t1 = threading.Thread(target=crawling) #make Thread
     t1.daemon = True  # make as Daemon Thread
     t1.start()  # start
 
-def dropdownChange(home, away):
+def TeamMenuChange(home, away):
     if not isTrained:
         return
     t2 = threading.Thread(target=startChoosnAlgo()) #make Thread
@@ -164,7 +164,7 @@ away_Team.grid(row = 3, column = 2)
 
 
 #set buttons
-crwalBtn = Button(root, text="Crawler", command=but1onClick) # crawl
+crwalBtn = Button(root, text="Crawler", command=makeCrawlThread) # crawl
 crwalBtn.grid(row=0, column=1)
 startTrainBtn = Button(root, text="Start Training", command=traning, state=DISABLED)
 startTrainBtn.grid(row=2, column=1)
@@ -210,9 +210,9 @@ endMatchMenu.grid(row = 1, column =2)
 
 # on change dropdown value
 def change_dropdown1(*args):
-    dropdownChange(hometeamVar.get(), guestteamVar.get())
+    TeamMenuChange(hometeamVar.get(), guestteamVar.get())
 def change_dropdown2(*args):
-    dropdownChange(hometeamVar.get(), guestteamVar.get())
+    TeamMenuChange(hometeamVar.get(), guestteamVar.get())
 
 # link function to change dropdown
 hometeamVar.trace('w', change_dropdown1)
