@@ -62,7 +62,8 @@ def crawling(startYear, startDay, endYear, endDay):
                 data = requests.get(url).json()
                 for game in range(len(data)):
                     wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['ShortName'],
-                    data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
+                    data[game]['Team2']['ShortName'], data[game]['MatchResults'][1]['PointsTeam1'],
+                                 data[game]['MatchResults'][1]['PointsTeam2']])
                 print(str(year)+'/day'+ str(day) + ' was loaded')        
         # If same year and start yaer.
         elif (year == startYear):
