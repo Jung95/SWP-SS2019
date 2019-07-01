@@ -6,6 +6,7 @@ minialgo = miniAlgo.Algorithmus()
 def test_init():
     """Test for right initialisation of variables
     """
+    minialgo.__init__()
     assert minialgo.startYear==0, "startYear initialised wrong"
     assert minialgo.startDay==0, "startDay initialised wrong"
     assert minialgo.endYear==0, "endYear initialised wrong"
@@ -16,4 +17,13 @@ def test_init():
     
 def test_setDate():
     minialgo.setDate(2018,5,2018,6,2019)
-    assert minialgo.startYear==2018, "fail"
+    assert minialgo.startYear==2018, "startYear set wrong"
+    assert minialgo.startDay==5, "startDay set wrong"
+    assert minialgo.endYear==2018, "endYear set wrong"
+    assert minialgo.endDay==6, "endDay set wrong"
+    assert minialgo.nowYear==2019, "nowYear set wrong"
+
+
+    
+
+
