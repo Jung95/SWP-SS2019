@@ -16,7 +16,7 @@ def actualMatchday():
         
     Returns: 
         - actualMatchday() returns an int which correspodend with the actual matchday of the Bundesliga
-        - in case that the matchday is over but the url not updated still returns the actual matchday
+        - in case that the matchday is over but the url not updated, still returns the actual matchday
         - if the season is over it returns 35
         - or an Error Message when the Matchdays of the matches differs
     '''
