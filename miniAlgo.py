@@ -51,6 +51,10 @@ class Algorithmus:
         Returns:
             bool: The return value. True for success, False otherwise.
         """
+        #if(self.startYear > self.endYear):
+         #   return False
+        #if((self.startYear == self.endYear) & (self.startDay > self.endDay)):
+         #   return False
         fileName = str(self.startDay)+"_"+str(self.startYear)+"_"+str(self.endDay)+"_"+str(self.endYear) + '.csv'
         if not(os.path.isfile(fileName)): # if there is CSV File already, skip it
              crawler.crawling(self.startYear, self.startDay,self.endYear, self.endDay)
