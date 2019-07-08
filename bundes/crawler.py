@@ -61,8 +61,11 @@ def crawling(startYear, startDay, endYear, endDay):
                 url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(day) # set he URL
                 data = requests.get(url).json()
                 for game in range(len(data)):
+                    if data[game]['MatchIsFinished']==False:
+                        break                    
                     wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['TeamName'],
-                    data[game]['Team2']['TeamName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
+                    data[game]['Team2']['TeamName'], data[game]['MatchResults'][1]['PointsTeam1'],
+                    data[game]['MatchResults'][1]['PointsTeam2']])
                 print(str(year)+'/day'+ str(day) + ' was loaded')        
         # If same year and start yaer.
         elif (year == startYear):
@@ -70,6 +73,8 @@ def crawling(startYear, startDay, endYear, endDay):
                 url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(day) # set he URL
                 data = requests.get(url).json()
                 for game in range(len(data)):
+                    if data[game]['MatchIsFinished']==False:
+                        break
                     wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['TeamName'],
                     data[game]['Team2']['TeamName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
                 print(str(year)+'/day'+ str(day) + ' was loaded')
@@ -79,6 +84,8 @@ def crawling(startYear, startDay, endYear, endDay):
                 url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(day) # set he URL
                 data = requests.get(url).json()
                 for game in range(len(data)):
+                    if data[game]['MatchIsFinished']==False:
+                        break
                     wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['TeamName'],
                     data[game]['Team2']['TeamName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
                 print(str(year)+'/day'+ str(day) + ' was loaded')
@@ -87,6 +94,8 @@ def crawling(startYear, startDay, endYear, endDay):
                 url = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(day) # set he URL
                 data = requests.get(url).json()
                 for game in range(len(data)):
+                    if data[game]['MatchIsFinished']==False:
+                        break
                     wr.writerow([data[game]['MatchDateTime'],data[game]['Team1']['TeamName'],
                     data[game]['Team2']['TeamName'], data[game]['MatchResults'][1]['PointsTeam1'], data[game]['MatchResults'][1]['PointsTeam2']])
                 print(str(year)+'/day'+ str(day) + ' was loaded')    

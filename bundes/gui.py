@@ -7,7 +7,7 @@ import time
 import csv
 import os
 import miniAlgo
-import tester
+
 
 # Global variables
 now = time.gmtime(time.time()) # set now
@@ -126,7 +126,7 @@ def crawling():
 
     """
     crawler.crawling(int(startYear.get()),int(startMatch.get()),int(endYear.get()),int(endMatch.get()))
-    tester.crawlTest(int(startYear.get()),int(startMatch.get()),int(endYear.get()),int(endMatch.get()))
+
     
     team_list = crawler.get_team_list(league_year) # Save the TeamList in List
 
