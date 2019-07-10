@@ -51,10 +51,10 @@ class Algorithmus:
         Returns:
             bool: The return value. True for success, False otherwise.
         """
-        #if(self.startYear > self.endYear):
-         #   return False
-        #if((self.startYear == self.endYear) & (self.startDay > self.endDay)):
-         #   return False
+        if(self.startYear > self.endYear):
+            return True
+        if((self.startYear == self.endYear) & (self.startDay > self.endDay)):
+            return True
         fileName = str(self.startDay)+"_"+str(self.startYear)+"_"+str(self.endDay)+"_"+str(self.endYear) + '.csv'
         if not(os.path.isfile(fileName)): # if there is CSV File already, skip it
              crawler.crawling(self.startYear, self.startDay,self.endYear, self.endDay)
@@ -81,7 +81,6 @@ class Algorithmus:
             if( line[1] in team_list and line[2] in team_list): 
                 self.histo[0][line[1]][int(line[3])]+=1
                 self.histo[1][line[2]][int(line[4])]+=1
-        
         return True
 
     def predict(self, home, away): #result[0] is home  1 is draw 2 is away
