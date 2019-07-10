@@ -1,3 +1,4 @@
+import getBundes
 import pytest
 import os
 import miniAlgo
@@ -35,7 +36,5 @@ def test_setHisto():
     assert minialgo.maxGoal==2, "maxGoal not detected correctly"
     # test falls daten falsch herum 
     # test für histogram befüllung
-    minialgo.setDate(2018,6,2018,5,2019)
-    assert os.path.isfile("6_2018_5_2018.csv"), "dates are invalid"
 
 
