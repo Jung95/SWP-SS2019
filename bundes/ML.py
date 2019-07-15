@@ -47,6 +47,9 @@ class PoissionRegression:
         return True
 
     def setData(self):
+	""" sets CSV file as self.Data
+
+	"""
         if(self.startYear > self.endYear):
             return True
         if((self.startYear == self.endYear) & (self.startDay > self.endDay)):
@@ -57,9 +60,20 @@ class PoissionRegression:
         self.Data = fileName
 
     def poisson(actual, mean):
+	""" calculates die poission distributed probability
+
+	Args:
+	actual(int): the number of goals for which the probability is calculated
+	mean(float): the likelyhood for a team's goals
+	
+	Returns: 
+	the probability of making "actual" goals
+	"""
         return math.pow(mean, actual) * math.exp(-mean) / math.factorial(actual)
 
     def function(self):
+	""" calculates the poission probablilites and saves them in a txt file
+	"""
         k = open('team_list.txt', 'w')
         k.write("""{
         """)
