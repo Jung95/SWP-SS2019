@@ -1,6 +1,5 @@
 import crawler
 from tkinter import *
-from tkinter import messagebox
 import tkinter as tkinter1
 import threading
 import time
@@ -140,9 +139,9 @@ class GUI:
         self.endMatchMenu.config(state="disabled")
         self.endYearMenu.config(state="disabled")
         self.status.configure(text= "Crawling, please wait") #change the Season in the Text
-        self.t1 = threading.Thread(target=self.crawling) #make Thread
-        self.t1.daemon = True  # make as Daemon Thread
-        self.t1.start()  # start
+        t1 = threading.Thread(target=self.crawling) #make Thread
+        t1.daemon = True  # make as Daemon Thread
+        t1.start()  # start
     def NextOrReset(self):
         self.NextOrResetBtn.config(text="Reset")
         if self.statusIndc==0:  # if Next
