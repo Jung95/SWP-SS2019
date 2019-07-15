@@ -267,23 +267,20 @@ class GUI:
 
             # table for tomorrows machtes with winning chances
             if not wasEnded:
-                nxtMtchs = Label(root, text='Next Matches')
+                nxtMtchs = Label(self.root, text='Next Matches')
                 nxtMtchs.grid(row=0, column = 4)
                 matchList = [0]*45
                 for match in range(9):
                     result = self.minialgo.predict(listHome[match], listGuest[match])
-                    Label(root, relief=RIDGE, text=listHome[match]).grid(row=1+match*2, column=3)
-                    Label(root,relief=RIDGE, text=listGuest[match]).grid(row=1+match*2, column=5)
-                    Label(root, text=str(result[0])+"%").grid(row=2+match*2, column=3)
-                    Label(root, text=str(result[1])+"%").grid(row=2+match*2, column=4)
-                    Label(root, text=str(result[2])+"%").grid(row=2+match*2, column=5)
-                    Label(root, text='vs.').grid(row=1 + 2*match,column=4)
+                    Label(self.root, relief=RIDGE, text=listHome[match]).grid(row=1+match*2, column=3)
+                    Label(self.root,relief=RIDGE, text=listGuest[match]).grid(row=1+match*2, column=5)
+                    Label(self.root, text=str(result[0])+"%").grid(row=2+match*2, column=3)
+                    Label(self.root, text=str(result[1])+"%").grid(row=2+match*2, column=4)
+                    Label(self.root, text=str(result[2])+"%").grid(row=2+match*2, column=5)
+                    Label(self.root, text='vs.').grid(row=1 + 2*match,column=4)
             else: 
-                Label(root, text='season has ended').grid(row=2, column=4)
+                Label(self.root, text='season has ended').grid(row=2, column=4)
             
        
 
-root = Tk()
-my_gui = GUI(root)
-root.mainloop()
 
