@@ -72,5 +72,9 @@ def test_setHisto():
                                'TSG 1899 Hoffenheim': [0, 0, 0],
                                'VfL Wolfsburg': [1, 0, 0],
                                'Werder Bremen': [0, 0, 0]}], "Histogram not filled correctly"
+def test_predict():
+    """ Test for correct prediction
+    """
+    
 
       
