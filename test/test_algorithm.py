@@ -75,6 +75,9 @@ def test_setHisto():
 def test_predict():
     """ Test for correct prediction
     """
-    
-
+    assert minialgo.predict("RB Leipzig", "Fortuna Düsseldorf") == [0,0,0], "No Data for teams"
+    assert minialgo.predict("SC Freiburg", "Borussia Mönchengladbach") == [0,0,100], "Away team should win, but does not"
+    assert minialgo.predict("FC Augsburg", "SC Freiburg") == [100,0,0], "Home should win, but does not"
+    assert minialgo.predict("FC Augsburg", "Fortuna Düsseldorf") == [0,0,0], "One team has no data"
+    assert minialgo.predict("FC Schalke 04", "Borussia Mönchengladbach") == [0,100,0], "Draw should be predicted, but is not"
       
