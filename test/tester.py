@@ -13,6 +13,9 @@ import json
 from tkinter import *
 
 class Tester:
+    """
+    It tests all functions of the main-programm
+    """
     def __init__(self):
         self.test_startYear = 2018
         self.test_startDay = 1
@@ -34,6 +37,12 @@ class Tester:
 
 
     def test_crawler_set_actualMatchday(self):
+        """It tests set_actualMatchday Function of crawler.
+            Args: 
+            
+            return: 
+                bool: True if successful, false otherwise
+        """
         print("--------------------------")
         print("crawler actualMatchday set Test:")
         url = 'https://www.openligadb.de/api/getmatchdata/bl1'
@@ -64,10 +73,6 @@ class Tester:
         The length correspodens with the number of matches in this time period.
         
             Args: 
-                startYear (int): Start Year to test. 
-                startDay (int): Start Matchday to test. 
-                endYear (int): End Year to test. 
-                endDay (int): End Matchday to test. 
             
             return: 
                 bool: True if successful, false otherwise
@@ -92,6 +97,12 @@ class Tester:
             return False
 
     def test_crawler_nxtMatch(self):
+        """It tests nxtMatch Function of crawler.
+            Args: 
+            
+            return: 
+                bool: True if successful, false otherwise
+        """
         print("--------------------------")
         print("crawler get next Match Test:")
         self.crawler.actualMatchday = 1
@@ -114,6 +125,12 @@ class Tester:
             return False
 
     def test_crawler_get_team_list(self):
+        """It tests get_team_list Function of crawler.
+            Args: 
+            
+            return: 
+                bool: True if successful, false otherwise
+        """
         print("--------------------------")
         print("crawler get teamlist Test:")
         nowYear_team_list = ['1. FC Köln', '1. FC Union Berlin', '1. FSV Mainz 05', 'Bayer Leverkusen', 'Borussia Dortmund', 'Borussia Mönchengladbach', 'Eintracht Frankfurt', 'FC Augsburg', 'FC Bayern', 'FC Schalke 04', 'Fortuna Düsseldorf', 'Hertha BSC', 'RB Leipzig', 'SC Freiburg', 'SC Paderborn 07', 'TSG 1899 Hoffenheim', 'VfL Wolfsburg', 'Werder Bremen']
@@ -127,6 +144,10 @@ class Tester:
         
     def test_miniAlgo_setDate(self):
         """Test for right setting of variables
+            Args: 
+            
+            return: 
+                bool: True if successful, false otherwise
         """
         result = True
         print("--------------------------")
@@ -155,6 +176,12 @@ class Tester:
         return result
     
     def test_miniAlgo_setHisto(self):
+        """It tests setHisto Function of miniAlgo.
+            Args: 
+            
+            return: 
+                bool: True if successful, false otherwise
+        """
         print("--------------------------")
         print("miniAlgo setHisto Test:")
         sample_histo=[{'1. FC Köln': [0, 0, 0, 0], '1. FC Union Berlin': [0, 0, 0, 0], '1. FSV Mainz 05': [0, 0, 0, 0], 'Bayer Leverkusen': [0, 1, 0, 0], 'Borussia Dortmund': [0, 0, 0, 1], 'Borussia Mönchengladbach': [1, 0, 0, 0], 'Eintracht Frankfurt': [1, 0, 0, 0], 'FC Augsburg': [0, 1, 0, 0], 'FC Bayern': [0, 1, 0, 0], 'FC Schalke 04': [1, 0, 0, 0], 'Fortuna Düsseldorf': [0, 1, 0, 0], 'Hertha BSC': [0, 0, 0, 0], 'RB Leipzig': [1, 0, 0, 0], 'SC Freiburg': [1, 0, 0, 0], 'SC Paderborn 07': [0, 0, 0, 0], 'TSG 1899 Hoffenheim': [1, 0, 0, 0], 'VfL Wolfsburg': [0, 1, 0, 0], 'Werder Bremen': [0, 0, 0, 0]}, {'1. FC Köln': [0, 0, 0, 0], '1. FC Union Berlin': [0, 0, 0, 0], '1. FSV Mainz 05': [0, 0, 0, 0], 'Bayer Leverkusen': [1, 0, 0, 0], 'Borussia Dortmund': [0, 0, 0, 0], 'Borussia Mönchengladbach': [1, 0, 0, 0], 'Eintracht Frankfurt': [0, 1, 0, 0], 'FC Augsburg': [1, 0, 0, 0], 'FC Bayern': [0, 0, 0, 0], 'FC Schalke 04': [1, 0, 0, 0], 'Fortuna Düsseldorf': [1, 0, 0, 0], 'Hertha BSC': [0, 1, 0, 0], 'RB Leipzig': [0, 1, 0, 0], 'SC Freiburg': [0, 1, 0, 0], 'SC Paderborn 07': [0, 0, 0, 0], 'TSG 1899 Hoffenheim': [1, 0, 0, 0], 'VfL Wolfsburg': [0, 1, 0, 0], 'Werder Bremen': [0, 1, 0, 0]}]
@@ -169,6 +196,12 @@ class Tester:
             print("histo set Error")
         
     def test_miniAlgo_predict(self):
+        """It tests predict Function of miniAlgo.
+            Args: 
+            
+            return: 
+                bool: True if successful, false otherwise
+        """
         print("--------------------------")
         print("miniAlgo predict Test:")
         if(self.miniAlgo.predict('Bayer Leverkusen', 'RB Leipzig')==[0.0, 100.0, 0.0]):
@@ -177,6 +210,12 @@ class Tester:
             print("predict Error")
     
     def test_gui(self):
+        """It tests GUI with invoke() function.  
+            Args: 
+            
+            return: 
+                bool: True if successful, false otherwise
+        """
         print("--------------------------")
         print("GUI Test:")
         root = Tk()
