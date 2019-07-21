@@ -230,7 +230,7 @@ class Tester:
         else:
             print('Next Button error')
         testGUI.endYear.set(str(2018))   
-        testGUI.endMatch.set(str(1))
+        testGUI.endMatch.set(str(2))
 
         testGUI.crawlBtn.invoke()
         if(testGUI.status.cget("text")=='Crawling, please wait'):
