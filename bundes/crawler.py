@@ -36,14 +36,10 @@ class Crawler:
         
         for x in range(1, 9):
             match1 = data[x]['Group']
-            if match1['GroupOrderID'] != groupID:
-                print('unexpected Matchday diffrence')
-                return False
-            else: 
-                if lastmatch < data[x]['MatchDateTime']:
-                    lastmatch = data[x]['MatchDateTime']
-                else:
-                    continue        
+            if lastmatch < data[x]['MatchDateTime']:
+                lastmatch = data[x]['MatchDateTime']
+            else:
+                continue        
         if lastmatch < now:
             self.actualMatchday = groupID + 1
         else:
