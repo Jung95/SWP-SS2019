@@ -19,6 +19,7 @@ class GUI:
         else:
             self.league_year = self.year
         self.isTrained = False
+        self.crawler = crawler.Crawler()
         self.minialgo = miniAlgo.Algorithmus()
         self.statusIndc = 0
 
@@ -215,10 +216,10 @@ class GUI:
         """Crawl selected game results and save team names in dropdown menues
 
         """
-        crawler.crawling(int(self.startYear.get()),int(self.startMatch.get()),int(self.endYear.get()),int(self.endMatch.get()))
+        self.crawler.crawling(int(self.startYear.get()),int(self.startMatch.get()),int(self.endYear.get()),int(self.endMatch.get()))
 
             
-        team_list = crawler.get_team_list(self.league_year) # Save the TeamList in List
+        team_list = self.crawler.get_team_list(self.league_year) # Save the TeamList in List
 
             # reset var and delete all old options
         self.hometeamVar.set(team_list[0])
@@ -247,7 +248,7 @@ class GUI:
         self.startChoosnAlgo()
             
             # crawl teams for next matches
-        crawler.nxtMatch(self.league_year)
+        self.crawler.nxtMatch(self.league_year)
             
             # put teams into lists
 
