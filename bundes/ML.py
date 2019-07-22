@@ -83,7 +83,7 @@ def function(data):
     k = open('team_list.txt', 'w')
     k.write("""{
     """)
-
+    
     csvRead = csv.reader(open(data))
         
     # create a list with all team names
@@ -102,6 +102,10 @@ def function(data):
     """ % (team))
     k.write("}")
     k.close()
+
+    r = open('prediction.txt', 'w')
+    r.write("""{
+    """)
 
     # erstelle ein Dictonary um Updates in der txt zu speichern
     s = open('team_list.txt', 'r').read()
@@ -136,7 +140,7 @@ def function(data):
                 curr_away_goals += dict[key]['away_goals']
 
                 # Mittelwert der erzielten Tore
-                if GAMES_PLAYED > (WEEKS_WAIT * 1):
+                if GAMES_PLAYED > (WEEKS_WAIT * 10):
                         avg_home_goals = curr_home_goals / (GAMES_PLAYED)
                         avg_away_goals = curr_away_goals / (GAMES_PLAYED)
                             
@@ -191,9 +195,11 @@ def function(data):
                         ev_bet = away_win_prob
 		
                 if (team_bet != '') and (ev_bet != ''):
-                        print ("For", home_team, "vs.", away_team, "bet on '%s' (Probability = %s)" % (team_bet, ev_bet))
-		
-        # UPDATE VARIABLES AFTER MATCH HAS BEEN PLAYED
+                        printout = "For " + str(home_team) + " vs." + str(away_team) + " bet on " + str(team_bet) + " (Probability =" + str(ev_bet) + ") \n"
+                        r.write(printout)
+                        #print ("For", home_team, "vs.", away_team, "bet on '%s' (Probability = %s)" % (team_bet, ev_bet))
+
+	# UPDATE VARIABLES AFTER MATCH HAS BEEN PLAYED
         dict[home_team]['home_goals'] += home_goals
         dict[home_team]['home_conceded'] += away_goals
         dict[home_team]['home_games'] += 1
@@ -205,7 +211,7 @@ def function(data):
         GAMES_PLAYED += 1
 	
         # CREATE FACTORS
-        if GAMES_PLAYED > (WEEKS_WAIT * 5):
+        if GAMES_PLAYED > (WEEKS_WAIT * 10):
                 for key, value in dict.items():
                         alpha_h = (dict[key]['home_goals'] / dict[key]['home_games']) / avg_home_goals
                         beta_h = (dict[key]['home_conceded'] / dict[key]['home_games']) / avg_away_goals
@@ -217,6 +223,6 @@ def function(data):
                         dict[key]['beta_h'] = beta_h
                         dict[key]['alpha_a'] = alpha_a
                         dict[key]['beta_a'] = beta_a
-
+    r.close()
 
 		    
