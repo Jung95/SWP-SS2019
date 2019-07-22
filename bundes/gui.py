@@ -11,16 +11,16 @@ class GUI:
     def __init__(self, root):
         self.root = root
         # Global variables
+        self.crawler = crawler.Crawler()
+        self.minialgo = miniAlgo.Algorithmus()
         self.now = time.gmtime(time.time()) # set now
         self.year = self.now.tm_year # now year
-        self.mon = self.now.tm_mon #now month
-        if(self.mon<7): # if before start season, then  now month - 2 (for example now 4/2019, then liga18/19 -> url 2018, but not yet end the season, so url 2017 is loaded)
+        if(self.crawler.actualMatchday==1): # if before start season, then  now month - 2 (for example now 4/2019, then liga18/19 -> url 2018, but not yet end the season, so url 2017 is loaded)
             self.league_year = self.year - 1
         else:
             self.league_year = self.year
         self.isTrained = False
-        self.crawler = crawler.Crawler()
-        self.minialgo = miniAlgo.Algorithmus()
+
         self.statusIndc = 0
 
         # Option Lists
@@ -28,7 +28,7 @@ class GUI:
         for self.year in range(1,10):
             self.start_Year_list.append(str(self.league_year-self.year))
         self.start_Match_list = [str(1)]
-        for self.day in range(2,35):
+        for self.day in range(2,self.crawler.actualMatchday):
             self.start_Match_list.append(str(self.day))
         self.team_list=["No list loaded"]
         self.end_Year_list = [str(self.league_year)]
@@ -83,7 +83,10 @@ class GUI:
         self.startYear.set(str(self.league_year)) # set the default option
         self.endYear.set(str(self.league_year)) # set the default option
         self.startMatch.set(str(1)) # set the default option
-        self.endMatch.set(str(34)) # set the default option
+        if(self.crawler.actualMatchday==1):
+            self.endMatch.set(str(34)) # set the default option
+        else:
+            self.endMatch.set(str(self.crawler.actualMatchday-1))
 
         self.homeTeamMenu = OptionMenu(root, self.hometeamVar, *self.team_list)
         self.geustTeamMenu = OptionMenu(root, self.guestteamVar, *self.team_list)
@@ -105,6 +108,7 @@ class GUI:
     # link function to change dropdown
         self.hometeamVar.trace('w', self.change_dropdown1)
         self.guestteamVar.trace('w', self.change_dropdown2)
+        self.startYear.trace('w', self.setStartMatchList)
         self.endYear.trace('w', self.setEndMatchList)
         # menu for selecting an algorithm 
         self.OPTIONS = [
@@ -123,15 +127,37 @@ class GUI:
         self.TeamMenuChange(self.hometeamVar.get(), self.guestteamVar.get())
     def change_dropdown2(self, *args):
         self.TeamMenuChange(self.hometeamVar.get(), self.guestteamVar.get())
+    def setStartMatchList(self, *args):
+        self.startMatch.set(str(1)) # set the default option
+        self.startMatchMenu['menu'].delete(0, 'end')
+        if(int(self.startYear.get())==self.league_year):
+            for x in range(1,self.crawler.actualMatchday):
+                self.startMatchMenu['menu'].add_command(label=str(x), command=tkinter1._setit(self.startMatch, str(35-x)))   
+        else:
+            for x in range(1,35):
+                self.startMatchMenu['menu'].add_command(label=str(x), command=tkinter1._setit(self.startMatch, str(x))) 
+            
     def setEndMatchList(self, *args):
         #removed all
         self.endMatchMenu['menu'].delete(0, 'end')
-        if(self.startYear.get()==self.endYear.get()):
-            for x in range(1,35-int(self.startMatch.get())+1):
-                self.endMatchMenu['menu'].add_command(label=str(35-x), command=tkinter1._setit(self.endMatch, str(35-x)))    
+        if(int(self.endYear.get())==self.league_year):
+            self.endMatch.set(str(self.crawler.actualMatchday-1)) # set the default option
+            if(self.startYear.get()==self.endYear.get()):
+                for x in range(36-self.crawler.actualMatchday,35-int(self.startMatch.get())+1):
+                    self.endMatchMenu['menu'].add_command(label=str(35-x), command=tkinter1._setit(self.endMatch, str(35-x)))    
+            else:
+                for x in range(36-self.crawler.actualMatchday,35):
+                    self.endMatchMenu['menu'].add_command(label=str(35-x), command=tkinter1._setit(self.endMatch, str(35-x)))
         else:
-            for x in range(1,35):
-                self.endMatchMenu['menu'].add_command(label=str(35-x), command=tkinter1._setit(self.endMatch, str(35-x))) 
+            self.endMatch.set(str(34))
+            if(self.startYear.get()==self.endYear.get()):
+                for x in range(1,35-int(self.startMatch.get())+1):
+                    self.endMatchMenu['menu'].add_command(label=str(35-x), command=tkinter1._setit(self.endMatch, str(35-x)))    
+            else:
+                for x in range(1,35):
+                    self.endMatchMenu['menu'].add_command(label=str(35-x), command=tkinter1._setit(self.endMatch, str(35-x))) 
+
+             
 
 
     def makeCrawlThread(self):
@@ -154,7 +180,8 @@ class GUI:
             self.crawlBtn.config(state="normal")
             self.status.configure(text= "Set a end date, and Crawl")
             # reset var and delete all old options
-            for x in range(1,self.league_year-int(self.startYear.get())+1):
+            self.endYearMenu['menu'].delete(0, 'end')
+            for x in range(0,self.league_year-int(self.startYear.get())+1):
                 self.endYearMenu['menu'].add_command(label=str(self.league_year-x), command=tkinter1._setit(self.endYear, str(self.league_year-x)))
             self.endYear.set(str(self.league_year))
             self.statusIndc=1
@@ -205,8 +232,6 @@ class GUI:
         """
         if(home == "No list loaded" or away == "No list loaded"):
             return
-        print(home)
-        print(away)
         result = self.minialgo.predict(home, away)
         self.result_team1.configure(text= str(result[0])+"%")
         self.result_text.configure(text= str(result[1])+"%")

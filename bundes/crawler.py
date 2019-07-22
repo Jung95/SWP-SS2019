@@ -13,6 +13,7 @@ class Crawler:
     def __init__(self):
         self.team_list = []
         self.actualMatchday = 0
+        self.set_actualMatchday()
     def set_actualMatchday(self):
         ''' 
         Method needs an Internet access
