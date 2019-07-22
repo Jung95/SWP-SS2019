@@ -92,7 +92,8 @@ class GUI:
         self.geustTeamMenu = OptionMenu(root, self.guestteamVar, *self.team_list)
         self.homeTeamMenu.grid(row = 6, column =0)
         self.geustTeamMenu.grid(row = 6, column =2)
-
+        self.homeTeamMenu.config(state="disabled")
+        self.geustTeamMenu.config(state="disabled")
         self.startYearMenu = OptionMenu(root, self.startYear, *self.start_Year_list)
         self.startYearMenu.grid(row = 1, column =0)
         self.endYearMenu = OptionMenu(root, self.endYear, *self.end_Year_list)
@@ -305,7 +306,8 @@ class GUI:
                     Label(self.root, text='vs.').grid(row=1 + 2*match,column=4)
             else: 
                 Label(self.root, text='season has ended').grid(row=2, column=4)
-            
+        self.homeTeamMenu.config(state="normal")
+        self.geustTeamMenu.config(state="normal")            
        
 
 
