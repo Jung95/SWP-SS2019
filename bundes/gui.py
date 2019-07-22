@@ -140,7 +140,7 @@ class GUI:
         self.endMatchMenu.config(state="disabled")
         self.endYearMenu.config(state="disabled")
         self.status.configure(text= "Crawling, please wait") #change the Season in the Text
-        t1 = threading.Thread(target=self.crawling) #make Thread
+        t1 = threading.Thread(target=self.crawling(self.startYear.get(),self.startMatch.get(),self.endYear.get(),self.endMatch.get())) #make Thread
         t1.daemon = True  # make as Daemon Thread
         t1.start()  # start
     def NextOrReset(self):
@@ -212,13 +212,12 @@ class GUI:
         self.result_text.configure(text= str(result[1])+"%")
         self.result_team2.configure(text= str(result[2])+"%")
             
-    def crawling(self):
+    def crawling(self, startYear,startDay, endYear, endDay):
         """Crawl selected game results and save team names in dropdown menues
 
         """
-        self.crawler.crawling(int(self.startYear.get()),int(self.startMatch.get()),int(self.endYear.get()),int(self.endMatch.get()))
+        self.crawler.crawling(int(startYear),int(startDay),int(endYear),int(endDay))
 
-            
         team_list = self.crawler.get_team_list(self.league_year) # Save the TeamList in List
 
             # reset var and delete all old options

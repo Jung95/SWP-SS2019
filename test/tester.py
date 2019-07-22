@@ -237,7 +237,7 @@ class Tester:
             print('Crawl Button Okay')
         else:
             print('Crawl Button error')
-        testGUI.crawling()
+        testGUI.crawling(2018,1,2018,2)
         if(testGUI.status.cget("text")== "Select Algo and Traning"):
             print('Crawling Okay in GUI')
         else:
@@ -246,6 +246,8 @@ class Tester:
         if(testGUI.isTrained== True):
             print('Traing button Okay')
         else:
-            print('Traing button  error')        
-         
-tester = Tester()
+            print('Traing button  error')
+
+        root.destroy() 
+
+        
