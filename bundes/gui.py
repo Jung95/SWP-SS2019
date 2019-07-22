@@ -140,7 +140,7 @@ class GUI:
     def setEndMatchList(self, *args):
         #removed all
         self.endMatchMenu['menu'].delete(0, 'end')
-        if(int(self.endYear.get())==self.league_year):
+        if(int(self.endYear.get())==self.league_year and self.crawler.actualMatchday != 1):
             self.endMatch.set(str(self.crawler.actualMatchday-1)) # set the default option
             if(self.startYear.get()==self.endYear.get()):
                 for x in range(36-self.crawler.actualMatchday,35-int(self.startMatch.get())+1):
