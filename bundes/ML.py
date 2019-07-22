@@ -103,6 +103,7 @@ def function(data):
     k.write("}")
     k.close()
 
+    # erstelle txt für predictions
     r = open('prediction.txt', 'w')
     r.write("""{
     """)
