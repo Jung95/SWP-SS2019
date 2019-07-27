@@ -21,6 +21,7 @@ class Algorithmus:
         self.histo = []
         #: int: Maximum of Goals in this Data.
         self.maxGoal = 0
+        self.crawler = crawler.Crawler()
 
 
     def setDate(self, startYear, startDay, endYear, endDay, nowYear):
@@ -57,7 +58,7 @@ class Algorithmus:
             return True
         fileName = str(self.startDay)+"_"+str(self.startYear)+"_"+str(self.endDay)+"_"+str(self.endYear) + '.csv'
         if not(os.path.isfile(fileName)): # if there is CSV File already, skip it
-             crawler.crawling(self.startYear, self.startDay,self.endYear, self.endDay)
+             self.crawler.crawling(self.startYear, self.startDay,self.endYear, self.endDay)
         result = 0
         f = open(fileName, 'r', encoding='utf-8')
         rdr = csv.reader(f)
@@ -67,7 +68,7 @@ class Algorithmus:
             if (int(line[4])> result):
                 result = int(line[4])           
         self.maxGoal = result
-        team_list = crawler.get_team_list(self.nowYear)
+        team_list = self.crawler.get_team_list(self.nowYear)
         home = {}
         away = {}
         for team in team_list:
