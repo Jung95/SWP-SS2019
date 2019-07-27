@@ -5,61 +5,6 @@ import math
 import ast
 import numpy
 
-#class PoissionRegression:
-#    def __init__(self, startYear=0, startDay=0, endYear=0, endDay=0, nowYear=0):
-#        """
-#        Args:
-#            startYear (int): Start Year to predict. It is optional, Default value is 0.
-#            startDay (int): Start Matchday to predict. It is optional, Default value is 0.
-#            endYear (int): End Year to predict. It is optional, Default value is 0.
-#            endDay (int): End Matchday to predict. It is optional, Default value is 0.
-#            nowYear (int): now Leagyear to get teamlist. It is optional, Default value is 0. 
-#        """        
-#        self.startYear = startYear
-#        self.startDay = startDay
-#        self.endYear = endYear
-#        self.endDay = endDay
-#        self.nowYear = nowYear
-#        self.histo = []
-#        self.maxGoal = 0
-#        self.Data
-#        self.team_list = []
-
-
-#    def setDate(self, startYear, startDay, endYear, endDay, nowYear):
-#        """
-#        Args:
-#            startYear (int): Start Year to predict. 
-#            startDay (int): Start Matchday to predict. 
-#            endYear (int): End Year to predict. 
-#            endDay (int): End Matchday to predict. 
-#            nowYear (int): now Leagyear to get teamlist. 
-#
-#        Returns:
-#            True if successful, False otherwise.
-
-#        """
-#        self.startYear = startYear
-#        self.startDay = startDay
-#        self.endYear = endYear
-#        self.endDay = endDay
-#        self.nowYear = nowYear
-#        return True
-
-#    def setData(self):
-#        """sets CSV file as self.Data
-
-#        """
-	
-#        if(self.startYear > self.endYear):
-#            return True
-#        if((self.startYear == self.endYear) & (self.startDay > self.endDay)):
-#            return True
-#        fileName = str(self.startDay)+"_"+str(self.startYear)+"_"+str(self.endDay)+"_"+str(self.endYear) + '.csv'
-#        if not(os.path.isfile(fileName)): # if there is CSV File already, skip it
-#             crawler.crawling(self.startYear, self.startDay,self.endYear, self.endDay)
-#        self.Data = "1_2018_2_2018.csv" #fileName replaced by dummy
-
 def poisson(actual, mean):
     """calculates die poission distributed probability
     Args:
