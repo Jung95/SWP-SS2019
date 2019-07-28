@@ -7,7 +7,7 @@ import csv
 
 def fit_data(startYear, startMatch, endYear, endMatch):
     """
-    
+
     fits the given data into an poisson distribution and creates an regression model
     
     Input:
@@ -46,6 +46,7 @@ def fit_data(startYear, startMatch, endYear, endMatch):
     
 def simulate_match(foot_model, homeTeam, awayTeam, max_goals=10):
     """
+    
     computes the probabilitys of the chance to win against the other team by the given datafram
     
     Args:
