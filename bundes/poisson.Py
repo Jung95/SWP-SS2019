@@ -10,17 +10,17 @@ import csv
 
 # fileName = str(startDay)+"_"+str(startYear)+"_"+str(endDay)+"_"+str(endYear) + '.csv'
 
-a= "1_2018_34_2018.csv"
+a= "1_2014_34_2016.csv"
 
 # create csv data with header
 with open(a,newline='') as f:
     r = csv.reader(f)
     data = [line for line in r]
-with open('file.csv','w',newline='') as f:
+with open('poissonfile.csv','w',newline='') as f:
     w = csv.writer(f)
     w.writerow(['Datum','HomeTeam','AwayTeam','HomeGoals','AwayGoals'])
     w.writerows(data)
-data = pd.read_csv('file.csv')
+data = pd.read_csv('poissonfile.csv')
 
 # print(data.head())
 
@@ -53,15 +53,11 @@ def simulate_match(foot_model, homeTeam, awayTeam, max_goals=10):
     return(np.outer(np.array(team_pred[0]), np.array(team_pred[1])))
     
     
-    
-vfbstu_bayern = simulate_match(poisson_model, 'VfB Stuttgart', 'FC Bayern', max_goals=3)
-
-
+# Example   
+vfbstu_bayern = simulate_match(poisson_model, 'VfB Stuttgart', 'FC Bayern')
 # Stuttgart win
-stuwin = np.sum(np.triu(vfbstu_bayern, -1))
+stuwin = np.sum(np.tril(vfbstu_bayern, -1))
 # draw
 stubaydraw = np.sum(np.diag(vfbstu_bayern))
 # Bayern win
-bayernwin = np.sum(np.triu(vfbstu_bayern, 1))
-
-
+bayernwin = np.sum(np.tril(vfbstu_bayern, 1))
