@@ -320,7 +320,8 @@ class GUI:
             else: 
                 Label(self.root, text='season has ended').grid(row=2, column=4)
         self.homeTeamMenu.config(state="normal")
-        self.geustTeamMenu.config(state="normal")            
+        self.geustTeamMenu.config(state="normal")
+        self.startTrainBtn.config(state="normal")
        
 
 
