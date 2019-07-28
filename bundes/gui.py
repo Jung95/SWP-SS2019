@@ -29,8 +29,13 @@ class GUI:
         for self.year in range(1,10):
             self.start_Year_list.append(str(self.league_year-self.year))
         self.start_Match_list = [str(1)]
-        for self.day in range(2,self.crawler.actualMatchday):
-            self.start_Match_list.append(str(self.day))
+        print(self.crawler.actualMatchday)
+        if(self.crawler.actualMatchday==1):
+            for self.day in range(2,35):
+                self.start_Match_list.append(str(self.day))
+        else:
+            for self.day in range(2,self.crawler.actualMatchday):
+                self.start_Match_list.append(str(self.day))
         self.team_list=["No list loaded"]
         self.end_Year_list = [str(self.league_year)]
         self.end_Match_list = [str(34)]
@@ -134,8 +139,12 @@ class GUI:
         self.startMatch.set(str(1)) # set the default option
         self.startMatchMenu['menu'].delete(0, 'end')
         if(int(self.startYear.get())==self.league_year):
-            for x in range(1,self.crawler.actualMatchday):
-                self.startMatchMenu['menu'].add_command(label=str(x), command=tkinter1._setit(self.startMatch, str(35-x)))   
+            if(self.crawler.actualMatchday!=1):
+                for x in range(1,self.crawler.actualMatchday):
+                    self.startMatchMenu['menu'].add_command(label=str(x), command=tkinter1._setit(self.startMatch, str(35-x)))
+            else:
+                for x in range(1,35):
+                    self.startMatchMenu['menu'].add_command(label=str(x), command=tkinter1._setit(self.startMatch, str(35-x)))                   
         else:
             for x in range(1,35):
                 self.startMatchMenu['menu'].add_command(label=str(x), command=tkinter1._setit(self.startMatch, str(x))) 
