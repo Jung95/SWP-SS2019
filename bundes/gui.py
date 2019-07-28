@@ -219,7 +219,8 @@ class GUI:
         if(self.algo.get() == "Mini Algorithm"): # add more algorithm function calls here
             self.calcPrep()
         if(self.algo.get() == "Poisson"):
-            result = poission.simulate_match(homeTeam = self.hometeamVar.get(), awayTeam = self.guestteamVar.get())
+            model = poisson.fit_data(int(self.startYear.get()), int(self.startMatch.get()), int(self.endYear.get()), int(self.endMatch.get()))
+            result = poisson.simulate_match(model, homeTeam = self.hometeamVar.get(), awayTeam = self.guestteamVar.get())
             self.result_team1.configure(text= str(result[0])+"%")
             self.result_text.configure(text= str(result[1])+"%")
             self.result_team2.configure(text= str(result[2])+"%")
