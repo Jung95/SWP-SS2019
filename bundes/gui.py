@@ -6,6 +6,7 @@ import time
 import csv
 import os
 import miniAlgo
+import poisson
 
 class GUI:
     def __init__(self, root):
@@ -114,6 +115,7 @@ class GUI:
         # menu for selecting an algorithm 
         self.OPTIONS = [
             "Mini Algorithm", # add new algorithm names here
+            "Poisson"
             ]
         self.algo = StringVar(root) 
         self.algo.set(self.OPTIONS[0]) # set the default option
@@ -216,6 +218,11 @@ class GUI:
         """
         if(self.algo.get() == "Mini Algorithm"): # add more algorithm function calls here
             self.calcPrep()
+        if(self.algo.get() == "Poisson"):
+            result = poission.simulate_match(homeTeam = self.hometeamVar.get(), awayTeam = self.guestteamVar.get())
+            self.result_team1.configure(text= str(result[0])+"%")
+            self.result_text.configure(text= str(result[1])+"%")
+            self.result_team2.configure(text= str(result[2])+"%")
 
     def calcPrep(self):
         """Creates histogram for training mini algorithm
