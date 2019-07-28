@@ -71,7 +71,7 @@ class GUI:
         self.NextOrResetBtn.grid(row=1, column=1)
         self.crawlBtn = Button(root, text="Crawl", command=self.makeCrawlThread, state=DISABLED) # crawl
         self.crawlBtn.grid(row=2, column=1)
-        self.startTrainBtn = Button(root, text="Start Training", command=self.traning, state=DISABLED)
+        self.startTrainBtn = Button(root, text="Make Predictions", command=self.traning, state=DISABLED)
         self.startTrainBtn.grid(row=4, column=1)
 
 
