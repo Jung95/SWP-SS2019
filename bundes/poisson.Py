@@ -50,14 +50,21 @@ def simulate_match(foot_model, homeTeam, awayTeam, max_goals=10):
             data={'team': awayTeam, 'opponent': homeTeam,'home':0}, index=[1])).values[0]
     
     team_pred = [[poisson.pmf(i, team_avg) for i in range(0, max_goals+1)] for team_avg in [home_goals_avg, away_goals_avg]]
-    return(np.outer(np.array(team_pred[0]), np.array(team_pred[1])))
     
+    abc = (np.outer(np.array(team_pred[0]), np.array(team_pred[1])))
+    homewin =  np.sum(np.tril(abc, -1))
+    draw = np.sum(np.diag(abc))
+    guestwin = np.sum(np.tril(abc, 1))
+    return list(homewin, draw, guestwin)
     
-# Example   
-vfbstu_bayern = simulate_match(poisson_model, 'VfB Stuttgart', 'FC Bayern')
-# Stuttgart win
-stuwin = np.sum(np.tril(vfbstu_bayern, -1))
-# draw
-stubaydraw = np.sum(np.diag(vfbstu_bayern))
-# Bayern win
-bayernwin = np.sum(np.tril(vfbstu_bayern, 1))
+      
+# =============================================================================
+# # Example   
+# vfbstu_bayern = simulate_match(poisson_model, 'VfB Stuttgart', 'FC Bayern')
+# # Stuttgart win
+# stuwin = np.sum(np.tril(vfbstu_bayern, -1))
+# # draw
+# stubaydraw = np.sum(np.diag(vfbstu_bayern))
+# # Bayern win
+# bayernwin = np.sum(np.tril(vfbstu_bayern, 1))
+# =============================================================================
