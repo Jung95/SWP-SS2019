@@ -95,7 +95,7 @@ class Algorithmus:
 
         """
         if(not(home in self.histo[0]) or not(away in self.histo[1])):
-            result = ["no Data","not Data","not Data"]
+            result = ["no Data","no Data","no Data"]
             return  result
         result = [0]*3
         for home_goal in range(int(self.maxGoal)+1):
