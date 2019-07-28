@@ -65,11 +65,13 @@ def simulate_match(foot_model, homeTeam, awayTeam, max_goals=10):
     
     team_pred = [[poisson.pmf(i, team_avg) for i in range(0, max_goals+1)] for team_avg in [home_goals_avg, away_goals_avg]]
     
+    result = [0]*3
     abc = (np.outer(np.array(team_pred[0]), np.array(team_pred[1])))
-    homewin =  np.sum(np.tril(abc, -1))
-    draw = np.sum(np.diag(abc))
-    guestwin = np.sum(np.tril(abc, 1))
-    return list(homewin, draw, guestwin)
+    result[0] = round(np.sum(np.tril(abc, -1))*100, 2)
+    result[1] = round(np.sum(np.diag(abc))*100, 2)
+    result[2] = round(np.sum(np.triu(abc, 1))*100, 2)
+    
+    return result
     
       
 
