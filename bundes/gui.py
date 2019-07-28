@@ -305,7 +305,10 @@ class GUI:
                 nxtMtchs.grid(row=0, column = 4)
                 matchList = [0]*45
                 for match in range(9):
-                    result = self.minialgo.predict(listHome[match], listGuest[match])
+                    if(self.algo.get() == "Mini Algorithm"):
+                        result = self.minialgo.predict(listHome[match], listGuest[match])
+                    if(self.algo.get() == "Poisson"):
+                        result = [0]*3
                     Label(self.root, relief=RIDGE, text=listHome[match]).grid(row=1+match*2, column=3)
                     Label(self.root,relief=RIDGE, text=listGuest[match]).grid(row=1+match*2, column=5)
                     Label(self.root, text=str(result[0])+"%").grid(row=2+match*2, column=3)
