@@ -322,9 +322,14 @@ class GUI:
                         
                     Label(self.root, relief=RIDGE, text=listHome[match]).grid(row=1+match*2, column=3)
                     Label(self.root,relief=RIDGE, text=listGuest[match]).grid(row=1+match*2, column=5)
-                    Label(self.root, text=str(result[0])+"%").grid(row=2+match*2, column=3)
-                    Label(self.root, text=str(result[1])+"%").grid(row=2+match*2, column=4)
-                    Label(self.root, text=str(result[2])+"%").grid(row=2+match*2, column=5)
+                    if(result[0]=="no Data"):
+                        Label(self.root, text=str(result[0])).grid(row=2+match*2, column=3)
+                        Label(self.root, text=str(result[1])).grid(row=2+match*2, column=4)
+                        Label(self.root, text=str(result[2])).grid(row=2+match*2, column=5)   
+                    else:                         
+                        Label(self.root, text=str(result[0])+"%").grid(row=2+match*2, column=3)
+                        Label(self.root, text=str(result[1])+"%").grid(row=2+match*2, column=4)
+                        Label(self.root, text=str(result[2])+"%").grid(row=2+match*2, column=5)
                     Label(self.root, text='vs.').grid(row=1 + 2*match,column=4)
             else: 
                 Label(self.root, text='season has ended').grid(row=2, column=4)

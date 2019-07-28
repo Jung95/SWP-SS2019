@@ -103,7 +103,9 @@ class Crawler:
             
     # crawl next days matches
     def nxtMatch(self, year):
-        if not(self.actualMatchday == 35): # if season is over, don't crawl new Data
+        if(os.path.isfile("nextGames.csv")):
+            os.remove("nextGames.csv")
+        if not(self.actualMatchday == 1): # if season is over, don't crawl new Data
             f = open( 'nextGames' +'.csv', 'w', encoding='utf-8', newline='')
             wr = csv.writer(f)
             nxtMatchUrl = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year) +'/' + str(self.actualMatchday+1)
@@ -111,7 +113,16 @@ class Crawler:
             for game in range(len(dataNxt)):
                     wr.writerow([dataNxt[game]['MatchDateTime'],dataNxt[game]['Team1']['TeamName'],
                         dataNxt[game]['Team2']['TeamName']])
-            print(str(year)+'/day'+ str(self.actualMatchday+1) + ' was loaded')   
+            print(str(year)+'/day'+ str(self.actualMatchday+1) + ' was loaded')
+        else: # if season is over, don't crawl new Data
+            f = open( 'nextGames' +'.csv', 'w', encoding='utf-8', newline='')
+            wr = csv.writer(f)
+            nxtMatchUrl = 'https://www.openligadb.de/api/getmatchdata/bl1/' + str(year+1) +'/' + str(self.actualMatchday)
+            dataNxt = requests.get(nxtMatchUrl).json()
+            for game in range(len(dataNxt)):
+                    wr.writerow([dataNxt[game]['MatchDateTime'],dataNxt[game]['Team1']['TeamName'],
+                        dataNxt[game]['Team2']['TeamName']])
+            print(str(year)+'/day'+ str(self.actualMatchday+1) + ' was loaded')
 
 
     def get_team_list(self, year):  

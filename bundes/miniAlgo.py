@@ -94,6 +94,9 @@ class Algorithmus:
             list: list[0] ist win probability for home team, list[1] ist draw probability , list[2] ist win probability for away team
 
         """
+        if(not(home in self.histo[0]) or not(away in self.histo[1])):
+            result = ["no Data","not Data","not Data"]
+            return  result
         result = [0]*3
         for home_goal in range(int(self.maxGoal)+1):
             for away_goal in range(int(self.maxGoal)+1):

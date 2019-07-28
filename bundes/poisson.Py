@@ -58,6 +58,15 @@ def simulate_match(foot_model, homeTeam, awayTeam, max_goals=10):
         list of the probabilitys in this order: (homewins, draw, guestwins)
 
     """
+    teamlist = []
+    f = open('poissonfile.csv', 'r', encoding='utf-8')
+    rdr = csv.reader(f)
+    for line in rdr:
+        if(not(line[1] in teamlist)):
+            teamlist.append(line[1])
+    if(not(homeTeam in teamlist) or not(awayTeam in teamlist)):
+        result = ["no Data","not Data","not Data"]
+        return result
     home_goals_avg = foot_model.predict(pd.DataFrame(
             data={'team': homeTeam, 'opponent': awayTeam,'home':1}, index=[1])).values[0]
     
